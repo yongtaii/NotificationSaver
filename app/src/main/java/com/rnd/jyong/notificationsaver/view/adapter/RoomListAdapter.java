@@ -1,0 +1,138 @@
+package com.rnd.jyong.notificationsaver.view.adapter;
+
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+import com.rnd.jyong.notificationsaver.R;
+import com.rnd.jyong.notificationsaver.base.BaseApplication;
+import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
+import com.rnd.jyong.notificationsaver.data.repository.NotiMessageRepository;
+import com.rnd.jyong.notificationsaver.databinding.ActivityRoomListBinding;
+import com.rnd.jyong.notificationsaver.utils.CommonUtil;
+import com.rnd.jyong.notificationsaver.view.ui.MainActivity;
+
+import java.util.List;
+
+public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavViewHolder> {
+
+    private List<NotiMessage> roomNames;
+    private Activity activity;
+
+    public RoomListAdapter(Activity activity, List<NotiMessage> list){
+        this.activity = activity;
+        roomNames = list;
+    }
+
+    @Override
+    public FavViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_room_row, parent, false);
+        return new FavViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(RoomListAdapter.FavViewHolder holder, int position) {
+        NotiMessage notiMessage = roomNames.get(position);
+        holder.tvMsg.setText(notiMessage.msg.replace(" ", "\u00A0"));
+        holder.tvRoomname.setText(notiMessage.roomname);
+        holder.tvTime.setText(CommonUtil.convertTimeForRoomList(notiMessage.time));
+        holder.ivIcon.setImageDrawable(new BitmapDrawable(BaseApplication.getInstance().getApplicationContext().getResources()
+                , CommonUtil.getImage(notiMessage.icon)));
+
+
+//        GradientDrawable drawable = (GradientDrawable) holder.tvIcon.getBackground();
+//        drawable.setColor(Color.parseColor(message.getMemberData().getColor()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return roomNames.size();
+    }
+
+
+    class FavViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+
+        TextView tvMsg;
+        TextView tvRoomname;
+        TextView tvTime;
+        ImageView ivIcon;
+        RelativeLayout roomWrapper;
+
+        FavViewHolder(View itemView) {
+            super(itemView);
+            tvMsg = itemView.findViewById(R.id.tvMsg);
+            tvTime = itemView.findViewById(R.id.tvTime);
+            tvRoomname = itemView.findViewById(R.id.tvRoomname);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
+            roomWrapper = itemView.findViewById(R.id.roomWrapper);
+            roomWrapper.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    NotiMessage roomNotiMessage = roomNames.get(pos);
+                    String roomname = roomNotiMessage.roomname;
+
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    intent.putExtra("roomname",roomname);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+                }
+            });
+
+            roomWrapper.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+//            menu.setHeaderTitle("Select The Action");
+            MenuItem deleteMenu = menu.add(0, 1, 1, "삭제하기"); //groupId, itemId, order, title
+            MenuItem ignoreMenu = menu.add(0, 2, 2, "차단하기"); //groupId, itemId, order, title
+            deleteMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+            ignoreMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+
+        }
+
+        private final MenuItem.OnMenuItemClickListener onMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                int pos = getAdapterPosition();
+                NotiMessage roomNotiMessage = roomNames.get(pos);
+                NotiMessageRepository repository = new NotiMessageRepository(activity.getApplication(), roomNotiMessage.roomname);
+
+                switch (item.getItemId()) {
+                    case 1:
+                        // delete
+                        repository.deleteRoomMessage(roomNotiMessage.roomname);
+                        break;
+
+                    case 2:
+                        // ignore
+                        CommonUtil.addToIgnoreList(roomNotiMessage);
+                        repository.deleteRoomMessage(roomNotiMessage.roomname);
+                        break;
+                }
+                return false;
+            }
+        };
+    }
+
+}
