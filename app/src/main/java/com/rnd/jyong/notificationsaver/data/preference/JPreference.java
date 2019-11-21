@@ -20,9 +20,18 @@ public class JPreference {
     private static final String PREF_NAME = "rms_pref";
 
     private static final String IGNORE_LIST  = "GPS_RECEIVED";
+    private static final String GUIDE_TALK_MESSAGE  = "GUIDE_TALK_MESSAGE";
 
     public static List<NotiMessage> getIgnoreList() {
         return getIgnoreList(IGNORE_LIST);
+    }
+
+    public static boolean getIsFirst() {
+        return get(GUIDE_TALK_MESSAGE, true);
+    }
+
+    public static void setIsFirst(boolean isfirst) {
+        put(GUIDE_TALK_MESSAGE, isfirst);
     }
 
     public static void setIgnoreList(List<NotiMessage> list) {

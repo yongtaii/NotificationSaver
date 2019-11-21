@@ -2,6 +2,8 @@ package com.rnd.jyong.notificationsaver.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -23,6 +25,20 @@ public class CommonUtil {
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
         return stream.toByteArray();
     }
+
+    // convert from Drawable to byte array
+    public static byte[] getBytesFromDrawable(Drawable drawable) {
+
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitMapData = stream.toByteArray();
+
+        return bitMapData;
+    }
+
+
+
 
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {

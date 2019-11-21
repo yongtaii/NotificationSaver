@@ -3,12 +3,20 @@ package com.rnd.jyong.notificationsaver.service;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.rnd.jyong.notificationsaver.BuildConfig;
+import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.repository.NotiMessageRepository;
 import com.rnd.jyong.notificationsaver.utils.CommonUtil;
@@ -36,15 +44,52 @@ public class NotificationListenerService extends android.service.notification.No
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-//        Log.i("NotificationListener", "[snowdeer] onNotificationPosted() - " + sbn.toString());
-//        Log.i("NotificationListener", "[snowdeer] PackageName:" + sbn.getPackageName());
-//        Log.i("NotificationListener", "[snowdeer] PostTime:" + sbn.getPostTime());
+
+
+        String pkgName = sbn.getPackageName();
+        Bundle extras = sbn.getNotification().extras;
+        Drawable smallIcon = null;
+        Bitmap extraPicture;
+
+        int iconId = extras.getInt(Notification.EXTRA_SMALL_ICON);
+
+//        try {
+//            PackageManager manager = getPackageManager();
+//            Resources resources = manager.getResourcesForApplication(pkgName);
+//            smallIcon = resources.getDrawable(iconId);
+//
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (extras.containsKey(Notification.EXTRA_PICTURE)) {
+//            // this bitmap contain the picture attachment
+//            extraPicture = (Bitmap) extras.get(Notification.EXTRA_PICTURE);
+//        }
+
+
 
         Notification notificatin = sbn.getNotification();
-        Bundle extras = notificatin.extras;
+//        int smallIconRes = extras.getInt(Notification.EXTRA_SMALL_ICON);
+//        Bitmap largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+//        Icon icon = extras.getParcelable(Notification.EXTRA_LARGE_ICON);
+//        Icon icon = notificatin.getLargeIcon();
+//        Drawable largeIcon = icon.loadDrawable(getApplicationContext());
+
+        Bitmap largeIcon;
+        try{
+            largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+        }catch (Exception e){
+            largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+        }
+
+//        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
+//            largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+//        }else{
+//            largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+//        }
+
         String title = extras.getString(Notification.EXTRA_TITLE);
-        int smallIconRes = extras.getInt(Notification.EXTRA_SMALL_ICON);
-        Bitmap largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
         CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
         CharSequence subText = extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
 
@@ -52,8 +97,9 @@ public class NotificationListenerService extends android.service.notification.No
         Log.i("NotificationListener", "[snowdeer] Text:" + text);
         Log.i("NotificationListener", "[snowdeer] Sub Text:" + subText);
 
-        String packageName = sbn.getPackageName();
-        long postTime = sbn.getPostTime();
+//        String packageName = sbn.getPackageName();
+//        long postTime = sbn.getPostTime();
+
         String roomName = subText == null ? title : subText.toString();
 
         // ignore 광고
@@ -61,12 +107,14 @@ public class NotificationListenerService extends android.service.notification.No
         // ignore ignorelist
         if(CommonUtil.isExistInIgnoreList(roomName)) return;
 
-        switch (packageName){
+        switch (pkgName){
             case "com.kakao.talk":
 
                 if(text != null && title != null){
 
                     NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
+//                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(smallIcon)));
+//                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(largeIcon)));
                     repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
                 }
 
