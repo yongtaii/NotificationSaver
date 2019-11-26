@@ -79,6 +79,9 @@ public class NotificationListenerService extends android.service.notification.No
         Bitmap largeIcon;
         try{
             largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+            if(largeIcon == null){
+                largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+            }
         }catch (Exception e){
             largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
         }
