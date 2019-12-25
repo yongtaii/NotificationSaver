@@ -71,7 +71,7 @@ public class IgnoreListAdapter extends RecyclerView.Adapter<IgnoreListAdapter.Fa
 
                     ignoreList.remove(pos);
                     notifyItemRemoved(pos);
-                    notifyItemRangeChanged(pos, ignoreList.size());
+//                    notifyItemRangeChanged(pos, ignoreList.size());
 
 
                 }

@@ -113,16 +113,25 @@ public class CommonUtil {
 
     public static void removeIgnoreListItem(NotiMessage notiMessage){
 
+        boolean existInlist = false;
+        NotiMessage toDelete = null;
+
         List<NotiMessage> ignoreList = JPreference.getIgnoreList();
-        if(ignoreList.size() > 0){
+        if(ignoreList!=null && ignoreList.size() > 0){
 
             for (NotiMessage notimsg : ignoreList) {
                 if(notimsg.roomname.equalsIgnoreCase(notiMessage.roomname)){
-                    ignoreList.remove(notimsg);
-                    JPreference.setIgnoreList(ignoreList);
+                    toDelete = notimsg;
+                    existInlist = true;
                 }
             }
         }
+
+        if(existInlist && toDelete!=null){
+            ignoreList.remove(toDelete);
+            JPreference.setIgnoreList(ignoreList);
+        }
+
     }
 
     public static boolean isExistInIgnoreList(String roomname) {
