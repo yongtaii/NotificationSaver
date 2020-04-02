@@ -148,4 +148,11 @@ public class CommonUtil {
 
     }
 
+    public static byte[] convertDrawableToBytesWithBackground(Drawable d){
+        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
 }

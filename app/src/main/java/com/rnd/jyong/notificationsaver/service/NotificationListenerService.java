@@ -118,7 +118,14 @@ public class NotificationListenerService extends android.service.notification.No
                     NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
 //                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(smallIcon)));
 //                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(largeIcon)));
-                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
+                        repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),
+                                "kakao",CommonUtil.convertDrawableToBytesWithBackground(sbn.getNotification().getLargeIcon().loadDrawable(getApplicationContext()))));
+                    }else{
+                        repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+
+                    }
+
                 }
 
                 break;
