@@ -114,24 +114,30 @@ public class NotificationListenerService extends android.service.notification.No
             case "com.kakao.talk":
 
                 if(text != null && title != null){
-
-                    NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
-//                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(smallIcon)));
-//                    repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytesFromDrawable(largeIcon)));
-                    if( Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
-                        repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),
-                                "kakao",CommonUtil.convertDrawableToBytesWithBackground(sbn.getNotification().getLargeIcon().loadDrawable(getApplicationContext()))));
-                    }else{
-                        repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
-
-                    }
-
+                    inesrtDB(title,text,roomName,sbn,largeIcon);
                 }
 
                 break;
         }
 
+    }
 
+    private void inesrtDB(String title,CharSequence text,String roomName,StatusBarNotification sbn,Bitmap largeIcon ){
+
+        NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
+
+        try{
+
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.P && sbn.getNotification().getLargeIcon() != null){
+                repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),
+                        "kakao",CommonUtil.convertDrawableToBytesWithBackground(sbn.getNotification().getLargeIcon().loadDrawable(getApplicationContext()))));
+            }else{
+                repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+            }
+
+        }catch (Exception e){
+            repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+        }
 
     }
 
