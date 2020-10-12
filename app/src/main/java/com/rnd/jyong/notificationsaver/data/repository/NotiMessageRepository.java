@@ -30,12 +30,22 @@ public class NotiMessageRepository {
         NotiDatabase db = NotiDatabase.getDatabase(application);
         notiMessageDao = db.notiMessageDao();
 
-        allNotiMessages = notiMessageDao.getAllNotiMessages();
-        allRoomListNotiMessages = notiMessageDao.getRoomListNotiMessages();
+        try{
+            allNotiMessages = notiMessageDao.getAllNotiMessages();
+        }catch (Exception e){
+        }
+
+        try{
+            allRoomListNotiMessages = notiMessageDao.getRoomListNotiMessages();
+        }catch (Exception e){
+        }
 
         // roomname 있을 때 : room (MainActivity)입장 시
         if(roomname != null){
-            msgLiveDataByRoomname = notiMessageDao.getNotiMessagesByRoomname(roomname);
+            try{
+                msgLiveDataByRoomname = notiMessageDao.getNotiMessagesByRoomname(roomname);
+            }catch (Exception e){
+            }
         }else{
             msgLiveDataByRoomname = null;
         }
