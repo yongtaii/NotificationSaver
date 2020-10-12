@@ -27,19 +27,16 @@ public class NotificationListenerService extends android.service.notification.No
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("NotificationListener", "[snowdeer] onCreate()");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("NotificationListener", "[snowdeer] onStartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("NotificationListener", "[snowdeer] onDestroy()");
     }
 
     @Override
@@ -96,10 +93,6 @@ public class NotificationListenerService extends android.service.notification.No
         CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
         CharSequence subText = extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
 
-        Log.i("NotificationListener", "[snowdeer] Title:" + title);
-        Log.i("NotificationListener", "[snowdeer] Text:" + text);
-        Log.i("NotificationListener", "[snowdeer] Sub Text:" + subText);
-
 //        String packageName = sbn.getPackageName();
 //        long postTime = sbn.getPostTime();
 
@@ -143,6 +136,5 @@ public class NotificationListenerService extends android.service.notification.No
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        Log.i("NotificationListener", "[snowdeer] onNotificationRemoved() - " + sbn.toString());
     }
 }

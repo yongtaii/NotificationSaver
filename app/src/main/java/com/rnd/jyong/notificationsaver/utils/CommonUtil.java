@@ -155,4 +155,8 @@ public class CommonUtil {
         return stream.toByteArray();
     }
 
+    public static boolean checkIntoRoomAdmobTime(){
+
+    }
+
 }

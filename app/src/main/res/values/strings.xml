@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">톡 미리보기</string>
     <string name="menu_ignore_title">ignore</string>
+    <string name="addmob_app_id">ca-app-pub-1549026857562864~4814546127</string>
+    <string name="addmob_roomlist_ad_id">ca-app-pub-1549026857562864/5169769345</string>
+<!--    <string name="addmob_roomlist_open_id">ca-app-pub-1549026857562864/5170086577</string>-->
 </resources>

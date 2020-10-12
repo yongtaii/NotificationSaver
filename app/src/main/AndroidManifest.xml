@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--Addmob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1549026857562864~4814546127"/>
+
         <!--Activitys-->
         <activity
             android:name=".view.ui.InitActivity"

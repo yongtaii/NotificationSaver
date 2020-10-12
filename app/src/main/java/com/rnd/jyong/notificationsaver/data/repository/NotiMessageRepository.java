@@ -30,22 +30,12 @@ public class NotiMessageRepository {
         NotiDatabase db = NotiDatabase.getDatabase(application);
         notiMessageDao = db.notiMessageDao();
 
-        try{
             allNotiMessages = notiMessageDao.getAllNotiMessages();
-        }catch (Exception e){
-        }
-
-        try{
             allRoomListNotiMessages = notiMessageDao.getRoomListNotiMessages();
-        }catch (Exception e){
-        }
 
         // roomname 있을 때 : room (MainActivity)입장 시
         if(roomname != null){
-            try{
                 msgLiveDataByRoomname = notiMessageDao.getNotiMessagesByRoomname(roomname);
-            }catch (Exception e){
-            }
         }else{
             msgLiveDataByRoomname = null;
         }
@@ -71,8 +61,8 @@ public class NotiMessageRepository {
                 try{
                     return notiMessageDao.insert(notiMessages[0]);
                 }catch (Exception e){
-                    return -999l;
                     e.printStackTrace();
+                    return -999l;
                 }
 
             }

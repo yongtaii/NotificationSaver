@@ -18,6 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
@@ -32,10 +39,31 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
 
     private List<NotiMessage> roomNames;
     private Activity activity;
+    private InterstitialAd mInterstitialAd;
 
     public RoomListAdapter(Activity activity, List<NotiMessage> list){
         this.activity = activity;
         roomNames = list;
+        initAdmob();
+    }
+
+    private void initAdmob(){
+        MobileAds.initialize(activity.getApplicationContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+
+        mInterstitialAd = new InterstitialAd(activity.getApplicationContext());
+//        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // test admob
+        mInterstitialAd.setAdUnitId(activity.getApplicationContext().getString(R.string.addmob_roomlist_ad_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+//        mInterstitialAd.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdClosed() {
+//                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+//            }
+//        });
     }
 
     @Override
@@ -92,6 +120,10 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
 
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    }
 
                 }
             });
