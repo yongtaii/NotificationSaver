@@ -57,7 +57,14 @@ public class NotiMessageRepository {
             protected Long doInBackground(NotiMessage... notiMessages) {
                 if (notiMessageDao == null)
                     return -1L;
-                return notiMessageDao.insert(notiMessages[0]);
+
+                try{
+                    return notiMessageDao.insert(notiMessages[0]);
+                }catch (Exception e){
+                    return -999l;
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -97,7 +104,13 @@ public class NotiMessageRepository {
             protected Long doInBackground(Void... voids) {
                 if (notiMessageDao == null)
                     return -1L;
-                notiMessageDao.deleteAll();
+
+                try{
+                    notiMessageDao.deleteAll();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 return null;
             }
 
@@ -123,7 +136,13 @@ public class NotiMessageRepository {
             protected Long doInBackground(String... strings) {
                 if (notiMessageDao == null)
                     return -1L;
-                notiMessageDao.deleteRoomMessage(strings[0]);
+
+                try{
+                    notiMessageDao.deleteRoomMessage(strings[0]);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 return null;
             }
 
