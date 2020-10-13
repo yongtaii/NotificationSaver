@@ -121,7 +121,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
-                    if (mInterstitialAd.isLoaded()) {
+                    if (mInterstitialAd.isLoaded() && CommonUtil.checkLastRoomInAdmobTime()) {
                         mInterstitialAd.show();
                     }
 

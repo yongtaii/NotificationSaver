@@ -155,7 +155,18 @@ public class CommonUtil {
         return stream.toByteArray();
     }
 
-    public static boolean checkIntoRoomAdmobTime(){
+    public static boolean checkLastRoomInAdmobTime(){
+
+        long lastRoomInAdmobTime = JPreference.getLastRoomInAdmobTime();
+        long currentTime = System.currentTimeMillis();
+        boolean overFiveMinute = currentTime -lastRoomInAdmobTime > (5 * 1000 * 60);
+
+        if(overFiveMinute){
+            JPreference.setShowLastRoomInAdmobTime(currentTime);
+            return true;
+        }
+
+        return false;
 
     }
 
