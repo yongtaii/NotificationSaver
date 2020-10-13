@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,7 +11,7 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="WhiteActinBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="WhiteActinBarTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">#FFFFFF</item>
         <item name="titleTextColor">#000000</item>
 

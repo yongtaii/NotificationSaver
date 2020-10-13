@@ -20,6 +20,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -30,13 +35,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // material design (cardview)
+    implementation 'com.google.android.material:material:1.2.1'
     // Room
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    // cardview
-    implementation "com.google.android.material:material:1.0.0"
     // gson
     implementation 'com.google.code.gson:gson:2.8.5'
     // admob

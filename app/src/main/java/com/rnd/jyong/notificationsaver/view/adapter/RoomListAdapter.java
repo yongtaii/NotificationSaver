@@ -28,6 +28,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
+import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 import com.rnd.jyong.notificationsaver.data.repository.NotiMessageRepository;
 import com.rnd.jyong.notificationsaver.databinding.ActivityRoomListBinding;
 import com.rnd.jyong.notificationsaver.utils.CommonUtil;
@@ -122,6 +123,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
                     if (mInterstitialAd.isLoaded() && CommonUtil.checkLastRoomInAdmobTime()) {
+                        JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
                         mInterstitialAd.show();
                     }
 

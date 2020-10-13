@@ -1,12 +1,18 @@
 package com.rnd.jyong.notificationsaver.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 
@@ -159,15 +165,59 @@ public class CommonUtil {
 
         long lastRoomInAdmobTime = JPreference.getLastRoomInAdmobTime();
         long currentTime = System.currentTimeMillis();
-        boolean overFiveMinute = currentTime -lastRoomInAdmobTime > (5 * 1000 * 60);
+        return currentTime -lastRoomInAdmobTime > (5 * 1000 * 60);
 
-        if(overFiveMinute){
-            JPreference.setShowLastRoomInAdmobTime(currentTime);
-            return true;
-        }
+    }
 
-        return false;
+    public static boolean rotateFab(final View v, boolean rotate) {
+        v.animate().setDuration(200)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                })
+                .rotation(rotate ? 135f : 0f);
+        return rotate;
+    }
 
+    public static void showIn(final View v) {
+        v.setVisibility(View.VISIBLE);
+        v.setAlpha(0f);
+        v.setTranslationY(v.getHeight());
+        v.animate()
+                .setDuration(200)
+                .translationY(0)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                })
+                .alpha(1f)
+                .start();
+    }
+    public static void showOut(final View v) {
+        v.setVisibility(View.VISIBLE);
+        v.setAlpha(1f);
+        v.setTranslationY(0);
+        v.animate()
+                .setDuration(200)
+                .translationY(v.getHeight())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        v.setVisibility(View.GONE);
+                        super.onAnimationEnd(animation);
+                    }
+                }).alpha(0f)
+                .start();
+    }
+
+    public static void init(final View v) {
+        v.setVisibility(View.GONE);
+        v.setTranslationY(v.getHeight());
+        v.setAlpha(0f);
     }
 
 }

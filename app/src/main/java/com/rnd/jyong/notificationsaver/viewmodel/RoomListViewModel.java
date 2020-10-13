@@ -25,4 +25,13 @@ public class RoomListViewModel extends AndroidViewModel {
         return allRoomListLiveData;
     }
 
+    public void deleteAllNotiMessages() {
+        repository.deleteAll();
+    }
+
+    public void deleteMessageWithTime(long time) {
+        repository.deleteMessageWithTime(time);
+    }
+
+
 }

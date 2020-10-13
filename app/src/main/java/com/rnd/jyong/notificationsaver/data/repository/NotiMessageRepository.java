@@ -121,6 +121,38 @@ public class NotiMessageRepository {
         }.execute();
     }
 
+    public static void deleteMessageWithTime(long time){
+        new AsyncTask<Long, Void, Long>() {
+
+            private NotiMessageDao notiMessageDao;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                NotiDatabase db = NotiDatabase.getDatabase(BaseApplication.getInstance().getApplicationContext());
+                notiMessageDao = db.notiMessageDao();
+            }
+            @Override
+            protected Long doInBackground(Long... time) {
+                if (notiMessageDao == null)
+                    return -1L;
+
+                try{
+                    notiMessageDao.deleteMessageWithTime(time[0]);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Long aLong) {
+                super.onPostExecute(aLong);
+            }
+        }.execute(time);
+    }
+
     public static void deleteRoomMessage(String roomname){
         new AsyncTask<String, Void, Long>() {
 

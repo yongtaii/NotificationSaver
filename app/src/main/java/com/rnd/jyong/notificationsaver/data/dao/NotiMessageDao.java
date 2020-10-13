@@ -27,6 +27,9 @@ public interface NotiMessageDao {
     @Query("DELETE FROM noti_table")
     void deleteAll();
 
+    @Query("DELETE FROM noti_table WHERE time < :inputTime")
+    void deleteMessageWithTime(long inputTime);
+
     @Query("DELETE FROM noti_table WHERE roomname=:rname ")
     void deleteRoomMessage(String rname);
 
