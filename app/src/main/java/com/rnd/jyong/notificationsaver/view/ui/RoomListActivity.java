@@ -197,7 +197,6 @@ public class RoomListActivity extends AppCompatActivity {
 //                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
 
                     try {
-                        Log.d("yong1015", "start update");
                         mAppUpdateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
                                 // 유연한 업데이트 사용 시 (AppUpdateType.FLEXIBLE) 사용
@@ -207,12 +206,10 @@ public class RoomListActivity extends AppCompatActivity {
                                 // 전역변수로 선언해준 Code
                                 REQUEST_CODE_INAPP_UPDATE);
                     } catch (IntentSender.SendIntentException e) {
-                        Log.d("yong1015", "AppUpdateManager Error", e);
                         e.printStackTrace();
                     }
 
                 } else {
-                    Log.d("yong1015", "eles");
                 }
             }
         });
