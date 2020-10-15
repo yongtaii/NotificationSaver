@@ -3,6 +3,7 @@ package com.rnd.jyong.notificationsaver.view.ui;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,13 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.OnSuccessListener;
+import com.google.android.play.core.tasks.Task;
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
@@ -43,6 +51,9 @@ public class RoomListActivity extends AppCompatActivity {
     private boolean isFabRotated = false;
     private RoomListViewModel roomListViewModel;
 
+    private final int REQUEST_CODE_INAPP_UPDATE = 100;
+    private AppUpdateManager mAppUpdateManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +70,30 @@ public class RoomListActivity extends AppCompatActivity {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         roomListViewModel.getAllNotiMessages().observe(this, notiMessageObserver);
 
+        checkInAppUpdate();
+
         initFab();
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAppUpdateManager.getAppUpdateInfo().addOnSuccessListener(
+                new OnSuccessListener<AppUpdateInfo>() {
+                    @Override
+                    public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                        if (appUpdateInfo.updateAvailability()
+                                == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                            // 인 앱 업데이트가 이미 실행중이었다면 계속해서 진행하도록
+                            try {
+                                mAppUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, RoomListActivity.this, REQUEST_CODE_INAPP_UPDATE);
+                            } catch (IntentSender.SendIntentException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
     }
 
     final Observer<List<NotiMessage>> notiMessageObserver = new Observer<List<NotiMessage>>() {
@@ -149,5 +181,43 @@ public class RoomListActivity extends AppCompatActivity {
         deleteDialog.show();
 
     }
+
+    private void checkInAppUpdate(){
+        mAppUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
+        // 업데이트 사용 가능 상태인지 체크
+        Task<AppUpdateInfo> appUpdateInfoTask = mAppUpdateManager.getAppUpdateInfo();
+
+        // 사용가능 체크 리스너를 달아준다
+        appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                        && // 유연한 업데이트 사용 시 (AppUpdateType.FLEXIBLE) 사용
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+//                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+
+                    try {
+                        Log.d("yong1015", "start update");
+                        mAppUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo,
+                                // 유연한 업데이트 사용 시 (AppUpdateType.FLEXIBLE) 사용
+//                                AppUpdateType.IMMEDIATE,
+                                AppUpdateType.FLEXIBLE,
+                                RoomListActivity.this,
+                                // 전역변수로 선언해준 Code
+                                REQUEST_CODE_INAPP_UPDATE);
+                    } catch (IntentSender.SendIntentException e) {
+                        Log.d("yong1015", "AppUpdateManager Error", e);
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    Log.d("yong1015", "eles");
+                }
+            }
+        });
+
+    }
+
 
 }
