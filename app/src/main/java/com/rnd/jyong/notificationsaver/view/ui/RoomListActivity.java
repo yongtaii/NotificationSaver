@@ -41,6 +41,7 @@ public class RoomListActivity extends AppCompatActivity {
     private RoomListAdapter roomListAdapter;
     private ActivityRoomListBinding binding;
     private boolean isFabRotated = false;
+    private RoomListViewModel roomListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class RoomListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("채팅");
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_room_list);
-        RoomListViewModel roomListViewModel = new RoomListViewModel(getApplication());
+        roomListViewModel = new RoomListViewModel(getApplication());
         binding.setMainViewModel(roomListViewModel);
         binding.setLifecycleOwner(this);
 
@@ -112,7 +113,7 @@ public class RoomListActivity extends AppCompatActivity {
         String[] dateList = new String[]{"1주 전", "3주 전","전체 기간"};
         JPreference.setDelNotiMsgIdx(0);
         AlertDialog deleteDialog;
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this,R.style.CustomMaterialDialog)
                 .setTitle(getString(R.string.dialog_delete_notimsg_title))
                 .setNeutralButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                     @Override
@@ -126,10 +127,14 @@ public class RoomListActivity extends AppCompatActivity {
                         int index = JPreference.getDelNotiMsgIdx();
                         switch (index){
                             case 0:
+                                roomListViewModel.deleteMessageWithTime(1000*60*60*24*7);
+//                                roomListViewModel.deleteMessageWithTime(System.currentTimeMillis()-1000*60);
                                 break;
                             case 1:
+                                roomListViewModel.deleteMessageWithTime(System.currentTimeMillis()-1000*60*60*24*7*3);
                                 break;
                             case 2:
+                                roomListViewModel.deleteAllNotiMessages();
                                 break;
                         }
                     }

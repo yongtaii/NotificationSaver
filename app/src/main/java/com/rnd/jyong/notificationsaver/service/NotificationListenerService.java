@@ -42,7 +42,6 @@ public class NotificationListenerService extends android.service.notification.No
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-
         String pkgName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;
         Drawable smallIcon = null;
@@ -97,7 +96,6 @@ public class NotificationListenerService extends android.service.notification.No
 //        long postTime = sbn.getPostTime();
 
         String roomName = subText == null ? title : subText.toString();
-
         // ignore 광고
         if(text !=null && text.toString().contains("광고")) return;
         // ignore ignorelist
@@ -129,6 +127,7 @@ public class NotificationListenerService extends android.service.notification.No
             }
 
         }catch (Exception e){
+            e.printStackTrace();
             repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
         }
 
