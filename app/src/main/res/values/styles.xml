@@ -11,8 +11,8 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="WhiteActinBarTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">#FFFFFF</item>
+    <style name="WhiteActinBarTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ffffff</item>
         <item name="titleTextColor">#000000</item>
 
         <!-- Status bar stuff. -->
