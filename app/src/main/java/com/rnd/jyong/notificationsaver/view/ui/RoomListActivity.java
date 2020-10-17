@@ -18,6 +18,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -73,6 +74,19 @@ public class RoomListActivity extends AppCompatActivity {
         checkInAppUpdate();
 
         initFab();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(System.currentTimeMillis() - JPreference.getLastReviewDialogTime() > 1000*60*60*24*5){
+            JPreference.setLastReviewDialogTime(System.currentTimeMillis());
+            ReviewBottomSheetDialog bsdf = new ReviewBottomSheetDialog();
+            bsdf.show(getSupportFragmentManager(),bsdf.getTag());
+        }else{
+            super.onBackPressed();
+        }
 
     }
 

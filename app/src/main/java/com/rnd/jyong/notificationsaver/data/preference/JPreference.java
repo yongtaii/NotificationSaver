@@ -22,6 +22,7 @@ public class JPreference {
     private static final String IGNORE_LIST  = "GPS_RECEIVED";
     private static final String GUIDE_TALK_MESSAGE  = "GUIDE_TALK_MESSAGE";
     private static final String ADMOB_ROOM_IN  = "ADMOB_ROOM_IN";
+    private static final String LAST_DIALOG_REVIEW  = "LAST_DIALOG_REVIEW";
     private static final String NOTI_MSG_DELETE_INDEX  = "NOTI_MSG_DELETE_INDEX";
 
     public static List<NotiMessage> getIgnoreList() {
@@ -40,6 +41,13 @@ public class JPreference {
     }
     public static void setShowLastRoomInAdmobTime(long adTime) {
         put(ADMOB_ROOM_IN, adTime);
+    }
+
+    public static long getLastReviewDialogTime() {
+        return get(LAST_DIALOG_REVIEW, -9999l);
+    }
+    public static void setLastReviewDialogTime(long showTime) {
+        put(LAST_DIALOG_REVIEW, showTime);
     }
 
     public static int getDelNotiMsgIdx() {
