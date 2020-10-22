@@ -57,7 +57,6 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
         mInterstitialAd = new InterstitialAd(activity.getApplicationContext());
 //        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // test admob
         mInterstitialAd.setAdUnitId(activity.getApplicationContext().getString(R.string.addmob_roomlist_ad_id));
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 //        mInterstitialAd.setAdListener(new AdListener() {
 //            @Override
@@ -121,10 +120,14 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
 
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
-                    if (mInterstitialAd.isLoaded() && CommonUtil.checkLastRoomInAdmobTime()) {
-                        JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
-                        mInterstitialAd.show();
+                    Log.d("yong","mInterstitialAd.isLoaded() : " + mInterstitialAd.isLoaded());
+                    Log.d("yong","CommonUtil.checkLastRoomInAdmobTime() : " + CommonUtil.checkLastRoomInAdmobTime());
+                    if ( CommonUtil.checkLastRoomInAdmobTime()) {
+                        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                        if(mInterstitialAd.isLoaded()){
+                            JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
+                            mInterstitialAd.show();
+                        }
                     }
 
                 }
