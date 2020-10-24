@@ -142,12 +142,16 @@ public class CommonUtil {
 
     public static boolean isExistInIgnoreList(String roomname) {
 
-        List<NotiMessage> ignoreList = JPreference.getIgnoreList();
+        try{
+            List<NotiMessage> ignoreList = JPreference.getIgnoreList();
 
-        if(ignoreList == null) return false;
+            if(ignoreList == null) return false;
 
-        for (NotiMessage notiMessage : ignoreList) {
-            if(notiMessage.roomname.equalsIgnoreCase(roomname)) return true;
+            for (NotiMessage notiMessage : ignoreList) {
+                if(notiMessage.roomname.equalsIgnoreCase(roomname)) return true;
+            }
+        }catch (Exception e){
+            return false;
         }
 
         return false;
