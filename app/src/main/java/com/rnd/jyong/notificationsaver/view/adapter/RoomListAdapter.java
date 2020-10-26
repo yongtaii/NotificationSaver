@@ -25,6 +25,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.rnd.jyong.notificationsaver.BuildConfig;
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
@@ -49,6 +50,9 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
     }
 
     private void initAdmob(){
+
+        if(BuildConfig.DEBUG) return;
+
         MobileAds.initialize(activity.getApplicationContext(), new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
@@ -122,7 +126,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     Log.d("yong","mInterstitialAd.isLoaded() : " + mInterstitialAd.isLoaded());
                     Log.d("yong","CommonUtil.checkLastRoomInAdmobTime() : " + CommonUtil.checkLastRoomInAdmobTime());
-                    if ( CommonUtil.checkLastRoomInAdmobTime()) {
+                    if ( !BuildConfig.DEBUG && CommonUtil.checkLastRoomInAdmobTime()) {
                         mInterstitialAd.loadAd(new AdRequest.Builder().build());
                         if(mInterstitialAd.isLoaded()){
                             JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
