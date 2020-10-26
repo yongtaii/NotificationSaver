@@ -86,31 +86,31 @@ public class InitActivity extends AppCompatActivity {
 
         ArrayList dataset = new ArrayList();
         // muji
-        NotiMessage notiMessage1 = new NotiMessage(new NotiMessage("무지","뭐해?",
-                "무지",yesyesterday+1000*60*60,
+        NotiMessage notiMessage1 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[0],CommonUtil.getStringArray(R.array.example_msg_text)[0],
+                CommonUtil.getStringArray(R.array.example_msg_name)[0],yesyesterday+1000*60*60,
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_muji))));
         //apeach
-        NotiMessage notiMessage2 = new NotiMessage(new NotiMessage("어피치","우리 헤어져",
-                "어피치",yesterday,
+        NotiMessage notiMessage2 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[1],CommonUtil.getStringArray(R.array.example_msg_text)[1],
+                CommonUtil.getStringArray(R.array.example_msg_name)[1],yesterday,
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_apeach))));
         //tube
-        NotiMessage notiMessage3 = new NotiMessage(new NotiMessage("튜브","희망을 버리지 않고 계속 똑같이 충실했던 게..",
-                "튜브",System.currentTimeMillis()-(1000*60*10),
+        NotiMessage notiMessage3 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[2],CommonUtil.getStringArray(R.array.example_msg_text)[2],
+                CommonUtil.getStringArray(R.array.example_msg_name)[2],System.currentTimeMillis()-(1000*60*10),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_tube))));
-        NotiMessage notiMessage4 = new NotiMessage(new NotiMessage("튜브","거기에 대해서 분명히 얻는 점이 있을거라고 생각해요..",
-                "튜브",System.currentTimeMillis()-(1000*60*5),
+        NotiMessage notiMessage4 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[2],CommonUtil.getStringArray(R.array.example_msg_text)[3],
+                CommonUtil.getStringArray(R.array.example_msg_name)[2],System.currentTimeMillis()-(1000*60*5),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_tube))));
-        NotiMessage notiMessage5 = new NotiMessage(new NotiMessage("튜브","그거를 할 때만은 정말 충실하게 했으면 좋겠어요..",
-                "튜브",System.currentTimeMillis(),
+        NotiMessage notiMessage5 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[2],CommonUtil.getStringArray(R.array.example_msg_text)[4],
+                CommonUtil.getStringArray(R.array.example_msg_name)[2],System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_tube))));
         // neo
-        NotiMessage notiMessage6 = new NotiMessage(new NotiMessage("네오","차단",
-                "네오",yesyesterday+1000*60*60+1000*60*10,
+        NotiMessage notiMessage6 = new NotiMessage(new NotiMessage(CommonUtil.getStringArray(R.array.example_msg_name)[3],CommonUtil.getStringArray(R.array.example_msg_text)[5],
+                CommonUtil.getStringArray(R.array.example_msg_name)[3],yesyesterday+1000*60*60+1000*60*10,
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.drawable.test_neo))));
 
@@ -128,12 +128,12 @@ public class InitActivity extends AppCompatActivity {
     private void setGuide(){
 
         //guide
-        NotiMessage notiMessage1 = new NotiMessage(new NotiMessage("톡미리보기","메세지를 길게 누르면 삭제, 친구차단이 가능해요",
-                "톡미리보기 사용법",System.currentTimeMillis()-(1000*60*5),
+        NotiMessage notiMessage1 = new NotiMessage(new NotiMessage(getString(R.string.app_name),CommonUtil.getStringArray(R.array.example_msg_howtouse_text)[0],
+                getString(R.string.example_msg_howtouse_name),System.currentTimeMillis()-(1000*60*5),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.mipmap.ic_launcher_round))));
-        NotiMessage notiMessage2 = new NotiMessage(new NotiMessage("톡미리보기","메세지가 안온다면 카톡 알림 허용을 확인해 주세요",
-                "톡미리보기 사용법",System.currentTimeMillis(),
+        NotiMessage notiMessage2 = new NotiMessage(new NotiMessage(getString(R.string.app_name),CommonUtil.getStringArray(R.array.example_msg_howtouse_text)[1],
+                getString(R.string.example_msg_howtouse_name),System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
                 R.mipmap.ic_launcher_round))));
 

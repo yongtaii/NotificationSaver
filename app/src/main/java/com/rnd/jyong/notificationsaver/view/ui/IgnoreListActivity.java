@@ -12,6 +12,7 @@ import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 import com.rnd.jyong.notificationsaver.databinding.ActivityIgnoreListBinding;
 import com.rnd.jyong.notificationsaver.databinding.ActivityRoomListBinding;
+import com.rnd.jyong.notificationsaver.utils.CommonUtil;
 import com.rnd.jyong.notificationsaver.view.adapter.IgnoreListAdapter;
 import com.rnd.jyong.notificationsaver.view.adapter.RoomListAdapter;
 import com.rnd.jyong.notificationsaver.viewmodel.IgnoreListVIewModel;
@@ -30,7 +31,8 @@ public class IgnoreListActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_ignore_list);
 
         getSupportActionBar().setElevation(0);
-        getSupportActionBar().setTitle("차단");
+        getSupportActionBar().setTitle(CommonUtil.getStringArray(R.array.room_name_list)[0]);
+
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_ignore_list);
         IgnoreListVIewModel ignoreListVIewModel = new IgnoreListVIewModel(getApplication());

@@ -11,8 +11,11 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.ArrayRes;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.rnd.jyong.notificationsaver.R;
+import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 
@@ -230,6 +233,10 @@ public class CommonUtil {
         v.setVisibility(View.GONE);
         v.setTranslationY(v.getHeight());
         v.setAlpha(0f);
+    }
+
+    public static String[] getStringArray(@ArrayRes int resId) {
+        return BaseApplication.getInstance().getResources().getStringArray(resId);
     }
 
 }

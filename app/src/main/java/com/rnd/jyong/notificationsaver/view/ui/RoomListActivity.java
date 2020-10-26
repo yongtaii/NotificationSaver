@@ -45,7 +45,8 @@ public class RoomListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room_list);
 
         getSupportActionBar().setElevation(0);
-        getSupportActionBar().setTitle("채팅");
+        getSupportActionBar().setTitle(CommonUtil.getStringArray(R.array.room_name_list)[1]);
+
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_room_list);
         roomListViewModel = new RoomListViewModel(getApplication());
@@ -124,7 +125,8 @@ public class RoomListActivity extends AppCompatActivity {
 
     public void showDelteDialog(){
 
-        String[] dateList = new String[]{"1주 전", "3주 전","전체 기간"};
+        String[] dateList = new String[]{CommonUtil.getStringArray(R.array.dialog_delete_period_msg)[0],
+                CommonUtil.getStringArray(R.array.dialog_delete_period_msg)[1],CommonUtil.getStringArray(R.array.dialog_delete_period_msg)[2]};
         JPreference.setDelNotiMsgIdx(0);
         AlertDialog deleteDialog;
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this,R.style.CustomMaterialDialog)

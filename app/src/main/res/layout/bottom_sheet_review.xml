@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="톡 미리보기 앱 평가하기"
+            android:text="@string/bottom_sheet_review_title"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:textSize="24dp" />
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:textColor="#000000"
-                android:text="지금 평가하기"/>
+                android:text="@string/bottom_sheet_review_btn_go_now"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:background="@null"
-                android:text="나중에" />
+                android:text="@string/bottom_sheet_review_btn_later" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:background="@null"
-                android:text="이미 했어요" />
+                android:text="@string/bottom_sheet_review_btn_already_done" />
         </LinearLayout>
 
     </LinearLayout>
