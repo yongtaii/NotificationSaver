@@ -7,5 +7,8 @@
     <string name="btn_cancel">취소</string>
     <string name="btn_ok">확인</string>
     <string name="bottom_sheet_review_msg">톡 미리보기 앱을 잘 사용하고 계신가요? Google Play Store에서 앱을 평가해 주세요.\n 소중한 의견 감사합니다!</string>
-<!--    <string name="addmob_roomlist_open_id">ca-app-pub-1549026857562864/5170086577</string>-->
+    <!--    <string name="addmob_roomlist_open_id">ca-app-pub-1549026857562864/5170086577</string>-->
+    <string name="btn_update">업데이트</string>
+    <string name="dialog_update_title">Update App ?</string>
+    <string name="dialog_update_message">안정적인 서비스 제공을 위해 최신버전으로 업데이트가 필요합니다 톡미리보기 앱 업데이트 후 이용해 주세요!</string>
 </resources>

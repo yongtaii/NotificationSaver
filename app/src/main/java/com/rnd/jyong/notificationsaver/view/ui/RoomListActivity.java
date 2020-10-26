@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,7 +30,14 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.rnd.jyong.notificationsaver.BuildConfig;
 import com.rnd.jyong.notificationsaver.R;
+import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 import com.rnd.jyong.notificationsaver.databinding.ActivityRoomListBinding;
@@ -38,6 +47,7 @@ import com.rnd.jyong.notificationsaver.viewmodel.RoomListViewModel;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,9 +61,6 @@ public class RoomListActivity extends AppCompatActivity {
     private ActivityRoomListBinding binding;
     private boolean isFabRotated = false;
     private RoomListViewModel roomListViewModel;
-
-    private final int REQUEST_CODE_INAPP_UPDATE = 100;
-    private AppUpdateManager mAppUpdateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +77,7 @@ public class RoomListActivity extends AppCompatActivity {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         roomListViewModel.getAllNotiMessages().observe(this, notiMessageObserver);
-
-        checkInAppUpdate();
+        roomListViewModel.getAppVersion(appVersionListener);
 
         initFab();
 
@@ -93,21 +99,6 @@ public class RoomListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mAppUpdateManager.getAppUpdateInfo().addOnSuccessListener(
-                new OnSuccessListener<AppUpdateInfo>() {
-                    @Override
-                    public void onSuccess(AppUpdateInfo appUpdateInfo) {
-                        if (appUpdateInfo.updateAvailability()
-                                == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                            // 인 앱 업데이트가 이미 실행중이었다면 계속해서 진행하도록
-                            try {
-                                mAppUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, RoomListActivity.this, REQUEST_CODE_INAPP_UPDATE);
-                            } catch (IntentSender.SendIntentException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
     }
 
     final Observer<List<NotiMessage>> notiMessageObserver = new Observer<List<NotiMessage>>() {
@@ -196,39 +187,53 @@ public class RoomListActivity extends AppCompatActivity {
 
     }
 
-    private void checkInAppUpdate(){
-        mAppUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
-        // 업데이트 사용 가능 상태인지 체크
-        Task<AppUpdateInfo> appUpdateInfoTask = mAppUpdateManager.getAppUpdateInfo();
+    public void showUpdateDialog(){
 
-        // 사용가능 체크 리스너를 달아준다
-        appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
-            @Override
-            public void onSuccess(AppUpdateInfo appUpdateInfo) {
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && // 유연한 업데이트 사용 시 (AppUpdateType.FLEXIBLE) 사용
-                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-//                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-
-                    try {
-                        mAppUpdateManager.startUpdateFlowForResult(
-                                appUpdateInfo,
-                                // 유연한 업데이트 사용 시 (AppUpdateType.FLEXIBLE) 사용
-//                                AppUpdateType.IMMEDIATE,
-                                AppUpdateType.FLEXIBLE,
-                                RoomListActivity.this,
-                                // 전역변수로 선언해준 Code
-                                REQUEST_CODE_INAPP_UPDATE);
-                    } catch (IntentSender.SendIntentException e) {
-                        e.printStackTrace();
+        AlertDialog updateDialog;
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this,R.style.CustomMaterialDialog)
+                .setTitle(getString(R.string.dialog_update_title))
+                .setMessage(getString(R.string.dialog_update_message))
+                .setCancelable(false)
+                .setNeutralButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
                     }
-
-                } else {
-                }
-            }
-        });
+                })
+                .setPositiveButton(getString(R.string.btn_update), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        launchMarket(getPackageName());
+                    }
+                });
+        updateDialog = builder.create();
+        updateDialog.show();
 
     }
 
+    public void launchMarket(String appPackageName){
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    ValueEventListener appVersionListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            long serverAppVersion = (long)snapshot.getValue();
+            long clientAppVersion = BuildConfig.VERSION_CODE;
+
+            if(serverAppVersion > clientAppVersion){
+                showUpdateDialog();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.w(BaseApplication.LOG_TAG,"loadPost:onCancelled", error.toException());
+        }
+    };
 
 }

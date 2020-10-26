@@ -5,6 +5,9 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.repository.NotiMessageRepository;
 
@@ -31,6 +34,11 @@ public class RoomListViewModel extends AndroidViewModel {
 
     public void deleteMessageWithTime(long time) {
         repository.deleteMessageWithTime(time);
+    }
+
+    public void getAppVersion(ValueEventListener listener){
+        Query versionQuery = FirebaseDatabase.getInstance().getReference().child("app_version");
+        versionQuery.addListenerForSingleValueEvent(listener);
     }
 
 
