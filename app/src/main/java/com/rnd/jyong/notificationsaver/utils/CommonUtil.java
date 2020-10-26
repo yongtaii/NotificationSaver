@@ -173,6 +173,14 @@ public class CommonUtil {
 
     }
 
+    public static boolean checkLastUpdateDiaogTime(){
+
+        long lastUpdateDialogTime = JPreference.getLastUpdateDialogTime();
+        long currentTime = System.currentTimeMillis();
+        return currentTime -lastUpdateDialogTime > (60 * 1000 * 60);
+
+    }
+
     public static boolean rotateFab(final View v, boolean rotate) {
         v.animate().setDuration(200)
                 .setListener(new AnimatorListenerAdapter() {
