@@ -16,7 +16,11 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+//            multiDexKeepFile file('multidex-config.txt')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+//            multiDexKeepFile file('multidex-config.txt')
         }
     }
 
