@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">톡 미리보기</string>
     <string name="menu_ignore_title">ignore</string>
-    <string name="addmob_app_id">ca-app-pub-1549026857562864~4814546127</string>
-    <string name="addmob_roomlist_ad_id">ca-app-pub-1549026857562864/5169769345</string>
+    <string name="addmob_app_id">ca-app-pub-4557410077390092~8847618880</string>
+    <string name="addmob_roomlist_ad_id">ca-app-pub-4557410077390092/9402152657</string>
     <string name="dialog_delete_notimsg_title">메시지 삭제</string>
     <string name="btn_cancel">취소</string>
     <string name="btn_cancel_short">취소</string>

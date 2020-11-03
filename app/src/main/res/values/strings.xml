@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Msg Preview</string>
     <string name="menu_ignore_title">ignore</string>
-    <string name="addmob_app_id">ca-app-pub-1549026857562864~4814546127</string>
-    <string name="addmob_roomlist_ad_id">ca-app-pub-1549026857562864/5169769345</string>
+    <string name="addmob_app_id">ca-app-pub-4557410077390092~8847618880</string>
+    <string name="addmob_roomlist_ad_id">ca-app-pub-4557410077390092/9402152657</string>
     <string name="dialog_delete_notimsg_title">Delete Msg</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_cancel_short">Canc</string>
