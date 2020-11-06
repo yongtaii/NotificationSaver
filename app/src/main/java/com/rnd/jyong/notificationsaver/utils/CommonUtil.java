@@ -172,7 +172,7 @@ public class CommonUtil {
 
         long lastRoomInAdmobTime = JPreference.getLastRoomInAdmobTime();
         long currentTime = System.currentTimeMillis();
-        return currentTime -lastRoomInAdmobTime > (5 * 1000 * 60);
+        return currentTime -lastRoomInAdmobTime > (3 * 1000 * 60);
 
     }
 

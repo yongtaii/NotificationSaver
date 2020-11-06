@@ -125,11 +125,15 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.FavVie
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     if ( !BuildConfig.DEBUG && CommonUtil.checkLastRoomInAdmobTime()) {
+
                         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                        if(mInterstitialAd.isLoaded()){
-                            JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
-                            mInterstitialAd.show();
-                        }
+                        mInterstitialAd.setAdListener(new AdListener(){
+                            public void onAdLoaded(){
+                                JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis());
+                                mInterstitialAd.show();
+                            }
+                        });
+
                     }
 
                 }
