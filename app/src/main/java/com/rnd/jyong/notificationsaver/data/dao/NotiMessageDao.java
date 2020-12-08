@@ -33,9 +33,8 @@ public interface NotiMessageDao {
     @Query("DELETE FROM noti_table WHERE roomname=:rname ")
     void deleteRoomMessage(String rname);
 
-    @Query("SELECT * FROM ( SELECT * FROM noti_table ORDER BY time ASC) AS A GROUP BY roomname ORDER BY time DESC")
+    @Query("SELECT * FROM ( SELECT * FROM noti_table GROUP BY roomname HAVING max(time))  ORDER BY time DESC")
     LiveData<List<NotiMessage>> getRoomListNotiMessages();
 
-//    SELECT TOP 1 * FROM Table ORDER BY ID DESC GROUP BY
 
 }
