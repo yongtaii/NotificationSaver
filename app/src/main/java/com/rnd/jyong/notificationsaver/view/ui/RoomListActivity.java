@@ -16,10 +16,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.rnd.jyong.notificationsaver.BuildConfig;
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.base.BaseApplication;
@@ -29,6 +32,9 @@ import com.rnd.jyong.notificationsaver.databinding.ActivityRoomListBinding;
 import com.rnd.jyong.notificationsaver.utils.CommonUtil;
 import com.rnd.jyong.notificationsaver.view.adapter.RoomListAdapter;
 import com.rnd.jyong.notificationsaver.viewmodel.RoomListViewModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -52,10 +58,29 @@ public class RoomListActivity extends AppCompatActivity {
         roomListViewModel = new RoomListViewModel(getApplication());
         binding.setMainViewModel(roomListViewModel);
         binding.setLifecycleOwner(this);
+        binding.btmBanner.setOnClickListener(view -> {
+
+            String url = roomListViewModel.getBtmBannerUrl();
+
+
+            if(url.length() < 1) return;
+
+            if (!url.startsWith("http://") && !url.startsWith("https://"))
+                url = "https://" + url;
+
+            Log.d("yong123","launch url : " + url);
+
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(browserIntent);
+
+        });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         roomListViewModel.getAllNotiMessages().observe(this, notiMessageObserver);
+        roomListViewModel.getBtmBannerLiveData().observe(this, btmBannerObserver);
         roomListViewModel.getAppVersion(appVersionListener);
+        roomListViewModel.getBottomAdInfoFromFirebaseDB();
 
         initFab();
 
@@ -85,6 +110,16 @@ public class RoomListActivity extends AppCompatActivity {
 
             roomListAdapter = new RoomListAdapter(RoomListActivity.this,updatedList);
             binding.recyclerView.setAdapter(roomListAdapter);
+        }
+    };
+
+    final Observer<Uri> btmBannerObserver = new Observer<Uri>() {
+        @Override
+        public void onChanged(@Nullable final Uri uri) {
+
+            Glide.with(RoomListActivity.this)
+                    .load(uri)
+                    .into(binding.btmBanner);
         }
     };
 

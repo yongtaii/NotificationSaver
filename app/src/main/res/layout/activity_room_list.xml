@@ -8,47 +8,74 @@
             name="mainViewModel"
             type="com.rnd.jyong.notificationsaver.viewmodel.RoomListViewModel" />
     </data>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/mainLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btmBanner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#ffffff">
 
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:layout_gravity="bottom|end|right"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabTrash"
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom|end|right"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_trash_can"
-                android:tint="#37474F"
-                app:backgroundTint="#cccccc"
-                app:fabSize="mini"
-                app:rippleColor="#ffffff" />
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:backgroundTint="#008577"
-                app:srcCompat="@drawable/ic_plus"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabTrash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_trash_can"
+                    android:tint="#37474F"
+                    app:backgroundTint="#cccccc"
+                    app:fabSize="mini"
+                    app:rippleColor="#ffffff" />
 
-        </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:backgroundTint="#008577"
+                    app:srcCompat="@drawable/ic_plus"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <ImageView
+            android:id="@+id/btmBanner"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:background="#fff"
+            android:text="Bottom Banner"
+            android:textColor="#fff"
+            android:textSize="25dp"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </layout>
