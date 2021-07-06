@@ -3,15 +3,19 @@ package com.rnd.jyong.notificationsaver.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.Notification;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.ArrayRes;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.rnd.jyong.notificationsaver.R;
@@ -237,6 +241,53 @@ public class CommonUtil {
 
     public static String[] getStringArray(@ArrayRes int resId) {
         return BaseApplication.getInstance().getResources().getStringArray(resId);
+    }
+
+    public static Bitmap getImageFromSbnBundle(Bundle bundle){
+        try{
+            Bitmap retBitmap = null;
+            Parcelable parcelable;
+            Parcelable[] pages = getPages(bundle);
+            Bundle extensions = getExtensions(bundle);
+            Object obj;
+
+            if (pages == null) return null;
+
+            for (Parcelable parcelable2 : pages) {
+                parcelable = extensions.getParcelable("background");
+                if(parcelable != null){
+                    retBitmap = (Bitmap) parcelable;
+                    return retBitmap;
+                }
+
+                if( parcelable2 instanceof Notification){
+                    obj = ((Notification) parcelable2).extras.get(NotificationCompat.EXTRA_PICTURE);
+                    if( obj != null){
+                        return (Bitmap) obj;
+                    }
+                }
+            }
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static Parcelable[] getPages(Bundle bundle) {
+        Bundle extensions = getExtensions(bundle);
+        if (extensions == null || !extensions.containsKey("pages")) {
+            return null;
+        }
+        return extensions.getParcelableArray("pages");
+    }
+
+    private static Bundle getExtensions(Bundle bundle) {
+        Bundle bundle2 = bundle.getBundle("android.wearable.EXTENSIONS");
+        if (bundle2 != null) {
+            return bundle2;
+        }
+        return null;
     }
 
 }

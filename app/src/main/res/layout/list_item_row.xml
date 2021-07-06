@@ -81,4 +81,24 @@
         android:text="오후 3시29분"
         android:paddingBottom="4dp"/>
 
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_alignLeft="@+id/tvName"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"/>
+
+    <TextView
+        android:id="@+id/tvTimeWithImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/ivImage"
+        android:layout_alignBottom="@id/ivImage"
+        android:textSize="10dp"
+        android:text="오후 3시29분"
+        android:paddingBottom="4dp"/>
+
 </RelativeLayout>

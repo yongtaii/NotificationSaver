@@ -89,30 +89,30 @@ public class InitActivity extends AppCompatActivity {
         NotiMessage notiMessage1 = new NotiMessage(new NotiMessage("t1",CommonUtil.getStringArray(R.array.example_msg_text)[0],
                 "t1",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_muji))));
+                R.drawable.test_muji)),new byte[0]));
         //apeach
         NotiMessage notiMessage2 = new NotiMessage(new NotiMessage("t6",CommonUtil.getStringArray(R.array.example_msg_text)[1],
                 "t6",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_apeach))));
+                R.drawable.test_apeach)),new byte[0]));
         //tube
         NotiMessage notiMessage3 = new NotiMessage(new NotiMessage("t5",CommonUtil.getStringArray(R.array.example_msg_text)[2],
                 "t5",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_tube))));
+                R.drawable.test_tube)),new byte[0]));
         NotiMessage notiMessage4 = new NotiMessage(new NotiMessage("t4",CommonUtil.getStringArray(R.array.example_msg_text)[3],
                 "t4",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_tube))));
+                R.drawable.test_tube)),new byte[0]));
         NotiMessage notiMessage5 = new NotiMessage(new NotiMessage("t3",CommonUtil.getStringArray(R.array.example_msg_text)[4],
                 "t3",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_tube))));
+                R.drawable.test_tube)),new byte[0]));
         // neo
         NotiMessage notiMessage6 = new NotiMessage(new NotiMessage("t2",CommonUtil.getStringArray(R.array.example_msg_text)[5],
                 "t2",System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.drawable.test_neo))));
+                R.drawable.test_neo)),new byte[0]));
 
         NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
 
@@ -131,11 +131,11 @@ public class InitActivity extends AppCompatActivity {
         NotiMessage notiMessage1 = new NotiMessage(new NotiMessage(getString(R.string.app_name),CommonUtil.getStringArray(R.array.example_msg_howtouse_text)[0],
                 getString(R.string.example_msg_howtouse_name),System.currentTimeMillis()-(1000*60*5),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.mipmap.ic_launcher_round))));
+                R.mipmap.ic_launcher_round)),new byte[0]));
         NotiMessage notiMessage2 = new NotiMessage(new NotiMessage(getString(R.string.app_name),CommonUtil.getStringArray(R.array.example_msg_howtouse_text)[1],
                 getString(R.string.example_msg_howtouse_name),System.currentTimeMillis(),
                 "kakao",CommonUtil.getBytes(BitmapFactory.decodeResource(getResources(),
-                R.mipmap.ic_launcher_round))));
+                R.mipmap.ic_launcher_round)),new byte[0]));
 
         NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
 

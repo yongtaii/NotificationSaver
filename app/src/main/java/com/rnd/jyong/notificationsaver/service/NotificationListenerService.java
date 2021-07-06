@@ -41,37 +41,8 @@ public class NotificationListenerService extends android.service.notification.No
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-
         String pkgName = sbn.getPackageName();
         Bundle extras = sbn.getNotification().extras;
-        Drawable smallIcon = null;
-        Bitmap extraPicture;
-
-        int iconId = extras.getInt(Notification.EXTRA_SMALL_ICON);
-
-//        try {
-//            PackageManager manager = getPackageManager();
-//            Resources resources = manager.getResourcesForApplication(pkgName);
-//            smallIcon = resources.getDrawable(iconId);
-//
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (extras.containsKey(Notification.EXTRA_PICTURE)) {
-//            // this bitmap contain the picture attachment
-//            extraPicture = (Bitmap) extras.get(Notification.EXTRA_PICTURE);
-//        }
-
-
-
-        Notification notificatin = sbn.getNotification();
-//        int smallIconRes = extras.getInt(Notification.EXTRA_SMALL_ICON);
-//        Bitmap largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
-//        Icon icon = extras.getParcelable(Notification.EXTRA_LARGE_ICON);
-//        Icon icon = notificatin.getLargeIcon();
-//        Drawable largeIcon = icon.loadDrawable(getApplicationContext());
-
         Bitmap largeIcon;
         try{
             largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
@@ -81,19 +52,13 @@ public class NotificationListenerService extends android.service.notification.No
         }catch (Exception e){
             largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
         }
-
-//        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
-//            largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
-//        }else{
-//            largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));
-//        }
-
+        Bitmap image = CommonUtil.getImageFromSbnBundle(extras);
+        byte[] imageByteArray = new byte[0];
+        if(image != null)  imageByteArray = CommonUtil.getBytes(image);
         String title = extras.getString(Notification.EXTRA_TITLE);
         CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
         CharSequence subText = extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
 
-//        String packageName = sbn.getPackageName();
-//        long postTime = sbn.getPostTime();
 
         String roomName = subText == null ? title : subText.toString();
         // ignore 광고
@@ -101,11 +66,12 @@ public class NotificationListenerService extends android.service.notification.No
         // ignore ignorelist
         if(CommonUtil.isExistInIgnoreList(roomName)) return;
 
+
         switch (pkgName){
             case "com.kakao.talk":
 
                 if(text != null && title != null){
-                    inesrtDB(title,text,roomName,sbn,largeIcon);
+                    inesrtDB(title,text,roomName,sbn,largeIcon,imageByteArray);
                 }
 
                 break;
@@ -113,7 +79,7 @@ public class NotificationListenerService extends android.service.notification.No
 
     }
 
-    private void inesrtDB(String title,CharSequence text,String roomName,StatusBarNotification sbn,Bitmap largeIcon ){
+    private void inesrtDB(String title,CharSequence text,String roomName,StatusBarNotification sbn,Bitmap largeIcon,byte[] imageByteArray ){
 
         NotiMessageRepository repository = new NotiMessageRepository(getApplication(),null);
 
@@ -121,14 +87,14 @@ public class NotificationListenerService extends android.service.notification.No
 
             if( Build.VERSION.SDK_INT > Build.VERSION_CODES.P && sbn.getNotification().getLargeIcon() != null){
                 repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),
-                        "kakao",CommonUtil.convertDrawableToBytesWithBackground(sbn.getNotification().getLargeIcon().loadDrawable(getApplicationContext()))));
+                        "kakao",CommonUtil.convertDrawableToBytesWithBackground(sbn.getNotification().getLargeIcon().loadDrawable(getApplicationContext())),imageByteArray));
             }else{
-                repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+                repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon),imageByteArray));
             }
 
         }catch (Exception e){
             e.printStackTrace();
-            repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon)));
+            repository.insert(new NotiMessage(title,text.toString(),roomName,sbn.getPostTime(),"kakao",CommonUtil.getBytes(largeIcon),imageByteArray));
         }
 
     }

@@ -68,7 +68,7 @@ public class RoomListActivity extends AppCompatActivity {
             if (!url.startsWith("http://") && !url.startsWith("https://"))
                 url = "https://" + url;
 
-            Log.d("yong123","launch url : " + url);
+//            Log.d("yong123","launch url : " + url);
 
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

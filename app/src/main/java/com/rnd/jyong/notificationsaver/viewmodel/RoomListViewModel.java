@@ -63,10 +63,14 @@ public class RoomListViewModel extends AndroidViewModel {
     public void getAppVersion(ValueEventListener listener){
 
         if(!CommonUtil.checkLastUpdateDiaogTime()) return;
+        try{
+            JPreference.setLastUpdateDialogTime(System.currentTimeMillis());
+            Query versionQuery = FirebaseDatabase.getInstance().getReference().child("app_version");
+            versionQuery.addListenerForSingleValueEvent(listener);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        JPreference.setLastUpdateDialogTime(System.currentTimeMillis());
-        Query versionQuery = FirebaseDatabase.getInstance().getReference().child("app_version");
-        versionQuery.addListenerForSingleValueEvent(listener);
     }
 
     public void getBottomAdInfoFromFirebaseDB(){
@@ -85,9 +89,9 @@ public class RoomListViewModel extends AndroidViewModel {
                 String btmAdName = snapshot.child("BTM_AD_NAME").getValue().toString();
                 BTM_BANNER_URL = snapshot.child("BTM_AD_URL").getValue().toString();
 
-                Log.d("yong123","btmAdUse : " + btmAdUse);
-                Log.d("yong123","btmAdName : " + btmAdName);
-                Log.d("yong123","btmAdUrl : " + BTM_BANNER_URL);
+//                Log.d("yong123","btmAdUse : " + btmAdUse);
+//                Log.d("yong123","btmAdName : " + btmAdName);
+//                Log.d("yong123","btmAdUrl : " + BTM_BANNER_URL);
 
                 if(!btmAdUse.equalsIgnoreCase("true")) return;
 
@@ -95,7 +99,7 @@ public class RoomListViewModel extends AndroidViewModel {
                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("yong123","onSUccess()");
+//                        Log.d("yong123","onSUccess()");
                         btmBannerLiveData.postValue(uri);
                     }
                 });

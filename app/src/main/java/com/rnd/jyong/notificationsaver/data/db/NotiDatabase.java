@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.rnd.jyong.notificationsaver.data.dao.NotiMessageDao;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 
-@Database(entities = {NotiMessage.class}, version = 1,exportSchema = false)
+@Database(entities = {NotiMessage.class}, version = 2,exportSchema = false)
 public abstract class NotiDatabase extends RoomDatabase {
     public abstract NotiMessageDao notiMessageDao();
 

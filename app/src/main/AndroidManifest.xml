@@ -10,13 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--Addmob -->
+        <!-- Addmob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4557410077390092~8847618880"/>
-
-        <!--Activitys-->
+            android:value="ca-app-pub-4557410077390092~8847618880" /> <!-- Activitys -->
         <activity
             android:name=".view.ui.InitActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,18 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.ui.IgnoreListActivity"
-            android:theme="@style/WhiteActinBarTheme"/>
+            android:theme="@style/WhiteActinBarTheme" />
         <activity
             android:name=".view.ui.RoomListActivity"
-            android:theme="@style/WhiteActinBarTheme"/>
+            android:theme="@style/WhiteActinBarTheme" />
         <activity
             android:name=".view.ui.MainActivity"
-            android:theme="@style/WhiteActinBarTheme"/>
-
-        <!--Services-->
+            android:theme="@style/WhiteActinBarTheme" /> <!-- Services -->
+        <activity android:name=".view.ui.ImageViewActivity"
+            android:theme="@style/WhiteActinBarTheme" />
         <service
             android:name=".service.NotificationListenerService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -46,7 +42,6 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

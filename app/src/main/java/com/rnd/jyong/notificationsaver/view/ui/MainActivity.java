@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onChanged(@Nullable final List<NotiMessage> updatedList) {
 
-            mainAdapter = new MainAdapter(updatedList);
+            mainAdapter = new MainAdapter(getApplicationContext(),updatedList);
             binding.recyclerView.setAdapter(mainAdapter);
         }
     };

@@ -1,31 +1,46 @@
 package com.rnd.jyong.notificationsaver.view.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.rnd.jyong.notificationsaver.R;
 import com.rnd.jyong.notificationsaver.base.BaseApplication;
 import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.utils.CommonUtil;
+import com.rnd.jyong.notificationsaver.view.ui.ImageViewActivity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.FavViewHolder> {
 
     private List<NotiMessage> mNotiMessages;
+    private Context context;
 
-    public MainAdapter(List<NotiMessage> list){
+    public MainAdapter(Context context,List<NotiMessage> list){
+        this.context = context;
         mNotiMessages = list;
     }
 
@@ -38,11 +53,46 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.FavViewHolder>
     @Override
     public void onBindViewHolder(FavViewHolder holder, int position) {
         NotiMessage notiMessage = mNotiMessages.get(position);
-        holder.tvMsg.setText(notiMessage.msg);
         holder.tvName.setText(notiMessage.name);
-        holder.tvTime.setText(CommonUtil.convertTimeToSimpleTime(notiMessage.time));
         holder.viewIcon.setBackground(new BitmapDrawable(BaseApplication.getInstance().getApplicationContext().getResources()
                 , CommonUtil.getImage(notiMessage.icon)));
+
+
+        int visibleImage = notiMessage.image.length > 0 ? View.VISIBLE : View.GONE;
+        int visibleTest = visibleImage == View.VISIBLE ? View.GONE : View.VISIBLE;
+        holder.tvMsg.setVisibility(visibleTest);
+        holder.tvTime.setVisibility(visibleTest);
+        holder.ivImage.setVisibility(visibleImage);
+        holder.tvTimeWithImage.setVisibility(visibleImage);
+
+        if(visibleImage == View.VISIBLE){
+            // 이미지가 있을 경우
+//            holder.ivImage.setImageBitmap();
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transforms(new CenterInside(), new RoundedCorners(16));
+
+            Glide.with(BaseApplication.getInstance().getApplicationContext())
+                    .asBitmap()
+                    .load(notiMessage.image)
+                    .apply(requestOptions)
+                    .into(holder.ivImage);
+            holder.tvTimeWithImage.setText(CommonUtil.convertTimeToSimpleTime(notiMessage.time));
+
+            holder.ivImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ImageViewActivity.class);
+                    intent.putExtra(ImageViewActivity.EXTRA_NOTIMSG, notiMessage);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+        }else{
+            // 이미지가 없을 경우
+            holder.tvMsg.setText(notiMessage.msg);
+            holder.tvTime.setText(CommonUtil.convertTimeToSimpleTime(notiMessage.time));
+        }
+
 //        GradientDrawable drawable = (GradientDrawable) holder.tvIcon.getBackground();
 //        drawable.setColor(Color.parseColor(message.getMemberData().getColor()));
     }
@@ -59,6 +109,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.FavViewHolder>
         TextView tvName;
         TextView tvTime;
         View viewIcon;
+        ImageView ivImage;
+        TextView tvTimeWithImage;
 
         FavViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +118,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.FavViewHolder>
             tvName = itemView.findViewById(R.id.tvName);
             tvTime = itemView.findViewById(R.id.tvTime);
             viewIcon = itemView.findViewById(R.id.tvIcon);
+            ivImage = itemView.findViewById(R.id.ivImage);
+            tvTimeWithImage = itemView.findViewById(R.id.tvTimeWithImage);
 //            btnDelete.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
