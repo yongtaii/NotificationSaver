@@ -1,27 +1,34 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         google()
-        jcenter()
-        
+        mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0'
-        
+
+        classpath(Libs.androidGradlePlugin)
+
         // firebase
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
+//        classpath("com.google.gms:google-services:4.3.4")
+        classpath(Libs.Kotlin.gradlePlugin)
+
+
+        // navigation
+        classpath(Libs.AndroidX.Navigation.safeArgs)
+        // hilt
+        classpath(Libs.Hilt.hiltPlugin)
+//        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean",Delete::class){
+    delete(rootProject.buildDir)
 }

@@ -1,2 +1,4 @@
+rootProject.name='NotificationSaver'
 include ':app'
-rootProject.name='Notification Saver'
+include 'data:network'
+include 'data:database'
