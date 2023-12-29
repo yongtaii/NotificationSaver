@@ -1,0 +1,76 @@
+package com.rnd.jyong.notificationsaver.ui
+
+import android.graphics.BitmapFactory
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import com.rnd.jyong.notificationsaver.R
+import com.rnd.jyong.notificationsaver.data.preference.JPreference
+import com.rnd.jyong.notificationsaver.database.notification.entity.Message
+import com.rnd.jyong.notificationsaver.database.notification.repository.MessageRepository
+import com.rnd.jyong.notificationsaver.databinding.ActivityMainBinding
+import com.rnd.jyong.notificationsaver.utils.FileUtils
+import com.rnd.jyong.notificationsaver.utils.ImageUtils
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var messageRepository: MessageRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initialise()
+    }
+
+//    override fun onBackPressed() {
+////        super.onBackPressed()
+//        this.finish()
+//        Log.d("yong1234","onBackPressed()")
+//    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //todo 일정 기간 이후 메시지 삭제
+    }
+
+    private fun initialise(){
+
+        if (!JPreference.getIsFirst()) {
+            initDefaultMessages()
+            JPreference.setIsFirst(false)
+        }
+
+    }
+
+    private fun initDefaultMessages(){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            messageRepository.insert(Message(name = application.getString(R.string.my_name),
+                message = resources.getStringArray(R.array.example_msg_howtouse_text)[0],
+                groupName = application.getString(R.string.example_msg_howtouse_name),
+                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
+                postTime = (System.currentTimeMillis() - (1000 * 60 * 5)),
+                imageBase64 = ""))
+
+            messageRepository.insert(Message(name = application.getString(R.string.my_name),
+                message = resources.getStringArray(R.array.example_msg_howtouse_text)[1],
+                groupName = application.getString(R.string.example_msg_howtouse_name),
+                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
+                postTime = (System.currentTimeMillis()),
+                imageBase64 = ""))
+        }
+    }
+
+}

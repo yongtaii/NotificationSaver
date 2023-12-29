@@ -1,0 +1,60 @@
+<resources>
+    <string name="my_name">Pochaco</string>
+    <string name="app_name">Msg Preview</string>
+    <string name="menu_ignore_title">ignore</string>
+    <!--    jeonyt89-->
+    <string name="addmob_app_id">ca-app-pub-4557410077390092~8847618880</string>
+    <!--    jeonyt89-->
+    <string name="addmob_roomlist_ad_id">ca-app-pub-4557410077390092/9402152657</string>
+    <!--    &lt;!&ndash;    jeonyt0510&ndash;&gt;-->
+    <!--    <string name="addmob_app_id">ca-app-pub-1549026857562864~4814546127</string>-->
+    <!--    &lt;!&ndash;    test&ndash;&gt;-->
+    <!--    <string name="addmob_roomlist_ad_id">ca-app-pub-3940256099942544/1033173712</string>-->
+    <string name="dialog_delete_notimsg_title">Delete Msg</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_cancel_short">Canc</string>
+    <string name="btn_ok">Ok</string>
+    <string name="bottom_sheet_review_msg">Are you using the "Msg Preview" app well? Evaluate the app on the Google Play Store. Thank you for your valuable feedback!</string>
+
+    <string-array name="room_name_list">
+        <item>Blocked</item>
+        <item>Room List</item>
+    </string-array>
+    <string-array name="example_msg_name">
+        <item>Muzi</item>
+        <item>Apeach</item>
+        <item>Tube</item>
+        <item>Neo</item>
+    </string-array>
+    <string-array name="example_msg_text">
+        <item>What\'s up?</item>
+        <item>Let\'s break up.</item>
+        <item>Read much, but not many books.</item>
+        <item>I respect faith, but doubt is what gets you an education.</item>
+        <item>You may delay, but time will not.</item>
+        <item>Hello</item>
+    </string-array>
+    <string name="example_msg_howtouse_name">How to Use</string>
+    <string-array name="example_msg_howtouse_text">
+        <item>If you press and hold the message, you can delete it and block friends.</item>
+        <item>If you don\'t get a message, please check to allow KakaoTalk app notifications.</item>
+    </string-array>
+    <string-array name="dialog_delete_period_msg">
+        <item>For one week</item>
+        <item>For three week</item>
+        <item>Whole Time</item>
+    </string-array>
+    <string name="ignore_list_no_friend">No one was blocked.</string>
+    <string name="init_activity_permission_alarm_msg">Allow for \'Msg Preview\' Notifications Access.</string>
+    <string name="init_activity_btn_gosetting_msg">Allow Notifications Access</string>
+    <string name="bottom_sheet_review_title">Review \'Msg Preview\'</string>
+    <string name="bottom_sheet_review_btn_go_now">Rate now</string>
+    <string name="bottom_sheet_review_btn_later">Later</string>
+    <string name="bottom_sheet_review_btn_already_done">Already done</string>
+    <string name="btn_update">Update</string>
+    <string name="dialog_update_title">Update App ?</string>
+    <string name="dialog_update_message">Updates to the latest version are required for stable service delivery Please use the Msg Preview app after updating it!</string>
+
+    <!-- Main -->
+    <string name="main_title">List</string>
+</resources>

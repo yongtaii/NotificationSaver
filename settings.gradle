@@ -1,0 +1,4 @@
+rootProject.name='NotificationSaver'
+include ':app'
+include 'data:network'
+include 'data:database'

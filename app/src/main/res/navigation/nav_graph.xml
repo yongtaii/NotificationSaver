@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/permissionFragment">
+
+    <fragment
+        android:id="@+id/permissionFragment"
+        android:name="com.rnd.jyong.notificationsaver.ui.permission.PermissionFragment"
+        android:label="permissionFragment"
+        tools:layout="@layout/fragment_permission">
+        <action
+            android:id="@+id/action_permissionFragment_to_mainFragment"
+            app:destination="@id/mainFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.rnd.jyong.notificationsaver.ui.main.MainFragment"
+        android:label="mainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_detailFragment"
+            app:destination="@id/detailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.rnd.jyong.notificationsaver.ui.detail.DetailFragment"
+        android:label="detailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="groupName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
