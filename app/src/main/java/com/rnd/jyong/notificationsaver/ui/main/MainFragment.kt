@@ -19,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
 import com.rnd.jyong.notificationsaver.ui.components.paging.MainPagingAdapter
+import com.rnd.jyong.notificationsaver.utils.PopupUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -43,9 +46,15 @@ class MainFragment : Fragment() {
 //        binding.re
 
         val mainPagingAdapter = MainPagingAdapter()
-        mainPagingAdapter.setOnItemClickListener {
-            Log.d("yong1234","onClick!")
-            goDetail(it.groupName) }
+        mainPagingAdapter.setOnItemClickListener { goDetail(it.groupName) }
+        mainPagingAdapter.setOnItemLongClickListener {
+            PopupUtils.createSimplePopup(activity = requireActivity(),
+                message = getString(R.string.popup_delete_message_title),
+                okListener = { dialog, _ ->
+                    dialog.dismiss()
+                    viewModel.deleteGroup(it.groupName)
+                }).show()
+        }
         binding.bindAdapter(mainPagingAdapter = mainPagingAdapter)
 
         // Collect from the PagingData Flow in the ViewModel, and submit it to the

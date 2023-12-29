@@ -17,6 +17,14 @@ class MessageRepository @Inject constructor(
         messageDao.insert(message)
     }
 
+    suspend fun deleteGroup(groupName: String){
+        messageDao.deleteGroup(groupName)
+    }
+
+    suspend fun getLastestGroupMessages() : List<Message>{
+        return messageDao.getLastestGroupMessages()
+    }
+
     fun getAllMessages() : Flow<List<Message>> {
         return messageDao.getAllMessages()
     }
@@ -40,9 +48,9 @@ class MessageRepository @Inject constructor(
 
 
 
-    fun getGroupList() : Flow<List<Message>> {
-        return messageDao.getGroupList()
-    }
+//    fun getGroupList() : Flow<List<Message>> {
+//        return messageDao.getGroupList()
+//    }
 
     fun getGroupListByPagingSource() : Flow<PagingData<Message>> {
 
@@ -61,9 +69,9 @@ class MessageRepository @Inject constructor(
 
     }
 
-    fun getGroupMessages(groupName: String) : Flow<List<Message>> {
-        return messageDao.getGroupMessages(groupName)
-    }
+//    fun getGroupMessages(groupName: String) : Flow<List<Message>> {
+//        return messageDao.getGroupMessages(groupName)
+//    }
 
     fun getGroupMessagesByPagingSource(groupName: String) : Flow<PagingData<Message>> {
 

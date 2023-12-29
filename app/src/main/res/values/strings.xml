@@ -57,4 +57,5 @@
 
     <!-- Main -->
     <string name="main_title">List</string>
+    <string name="popup_delete_message_title">Delete it ?</string>
 </resources>

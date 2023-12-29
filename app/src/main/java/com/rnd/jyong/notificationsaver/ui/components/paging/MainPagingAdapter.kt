@@ -19,6 +19,10 @@ class MainPagingAdapter : PagingDataAdapter<MainItemViewData, MainPagingAdapter.
             holder.itemView.setOnClickListener {
                 onItemClickListener?.let { it(mainItemViewData) }
             }
+            holder.itemView.setOnLongClickListener {
+                onItemLongClickListener?.let { it(mainItemViewData) }
+                return@setOnLongClickListener true
+            }
         }
 //        val tile = getItem(position)
 //        if (tile != null) {
@@ -36,9 +40,14 @@ class MainPagingAdapter : PagingDataAdapter<MainItemViewData, MainPagingAdapter.
     }
 
     private var onItemClickListener: ((MainItemViewData) -> Unit)? = null
+    private var onItemLongClickListener: ((MainItemViewData) -> Unit)? = null
 //
     fun setOnItemClickListener(listener: (MainItemViewData) -> Unit) {
         onItemClickListener = listener
+    }
+
+    fun setOnItemLongClickListener(listener: (MainItemViewData) -> Unit) {
+        onItemLongClickListener = listener
     }
 
     object ARTICLE_DIFF_CALLBACK : DiffUtil.ItemCallback<MainItemViewData>() {

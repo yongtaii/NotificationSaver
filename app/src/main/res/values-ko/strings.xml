@@ -60,6 +60,8 @@
 
     <!-- Main-->
     <string name="main_title">채팅</string>
+    <string name="popup_delete_message_title">삭제 할까요?</string>
+
 
 
 </resources>

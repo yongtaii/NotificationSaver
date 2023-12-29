@@ -15,6 +15,8 @@ import com.rnd.jyong.notificationsaver.ui.main.data.MainItemViewData
 import com.rnd.jyong.notificationsaver.utils.ImageUtils
 import com.rnd.jyong.notificationsaver.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -53,8 +55,8 @@ class MainViewModel @Inject constructor(
 
 
 
-    private var _mainDatas = MutableStateFlow<List<MainItemViewData>>(emptyList())
-    val mainDatas = _mainDatas.asStateFlow()
+//    private var _mainDatas = MutableStateFlow<List<MainItemViewData>>(emptyList())
+//    val mainDatas = _mainDatas.asStateFlow()
 
     /**
      * Item Click Listener
@@ -66,15 +68,20 @@ class MainViewModel @Inject constructor(
 
     init {
 
-        viewModelScope.launch {
-
-            messageRepository.getGroupList().collectLatest {
-                _mainDatas.emit(it.toMainItemViewList(itemClickListener))
-            }
-        }
+//        viewModelScope.launch {
+//
+//            messageRepository.getGroupList().collectLatest {
+//                _mainDatas.emit(it.toMainItemViewList(itemClickListener))
+//            }
+//        }
 
     }
 
+    fun deleteGroup(groupName : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            messageRepository.deleteGroup(groupName)
+        }
+    }
 
 
 }

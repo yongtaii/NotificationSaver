@@ -21,6 +21,12 @@ interface MessageDao {
     suspend fun insert(message: Message) : Long
 
     /**
+     * delete Group
+     * */
+    @Query("DELETE FROM table_message WHERE group_name=:groupName ")
+    suspend fun deleteGroup(groupName: String)
+
+    /**
      * 전체 메시지
      * @return Flow
      * */
@@ -34,13 +40,12 @@ interface MessageDao {
     @Query("SELECT * FROM table_message ORDER BY post_time ASC")
     fun getAllMessagesByPagingSource(): PagingSource<Int, Message>
 
-
     /**
      * 메인화면 그룹 리스트
      * group_name 으로 그룹화 한후 최근 메시지를 가져온다
      * */
     @Query("SELECT * FROM ( SELECT * FROM table_message GROUP BY group_name HAVING max(post_time))  ORDER BY post_time DESC")
-    fun getGroupList(): Flow<List<Message>>
+    suspend fun getLastestGroupMessages(): List<Message>
 
     /**
      * 메인화면 그룹 리스트
@@ -76,8 +81,7 @@ interface MessageDao {
 //    @Query("DELETE FROM table_message WHERE saved_time < :inputTime")
 //    fun deleteMessageWithTime(inputTime: Long)
 //
-//    @Query("DELETE FROM table_message WHERE room_name=:rname ")
-//    fun deleteRoomMessage(rname: String?)
+
 //
 
 }
