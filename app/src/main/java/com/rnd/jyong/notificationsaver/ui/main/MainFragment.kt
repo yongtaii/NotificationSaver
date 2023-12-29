@@ -14,17 +14,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.rnd.jyong.notificationsaver.BR
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
-import com.rnd.jyong.notificationsaver.databinding.ItemMainRecyclerviewRowBinding
-import com.rnd.jyong.notificationsaver.ui.components.GeneralBindAdapter
 import com.rnd.jyong.notificationsaver.ui.components.paging.MainPagingAdapter
-import com.rnd.jyong.notificationsaver.ui.main.data.MainItemViewData
-import com.rnd.jyong.notificationsaver.view.adapter.MainAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,6 +43,9 @@ class MainFragment : Fragment() {
 //        binding.re
 
         val mainPagingAdapter = MainPagingAdapter()
+        mainPagingAdapter.setOnItemClickListener {
+            Log.d("yong1234","onClick!")
+            goDetail(it.groupName) }
         binding.bindAdapter(mainPagingAdapter = mainPagingAdapter)
 
         // Collect from the PagingData Flow in the ViewModel, and submit it to the
@@ -84,7 +81,7 @@ class MainFragment : Fragment() {
      * 상세페이지 이동
      * */
     private fun goDetail(groupName : String) {
-        Log.d("yong1234","goDetail")
+        Log.d("yong1234","goDetail : $groupName")
         val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(groupName)
         findNavController().navigate(direction)
     }
@@ -114,6 +111,6 @@ class MainFragment : Fragment() {
 private fun FragmentMainBinding.bindAdapter(mainPagingAdapter: MainPagingAdapter) {
     recyclerView.adapter = mainPagingAdapter
     recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-    val decoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
-    recyclerView.addItemDecoration(decoration)
+//    val decoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
+//    recyclerView.addItemDecoration(decoration)
 }

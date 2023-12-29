@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 import com.rnd.jyong.notificationsaver.R
 
 data class HeaderViewData(
-    val titleText : String,
+    val titleText : String? = null,
     val titleTextRes : Int? = null,
 //    @DrawableRes val leftBtnImageRes : Int = R.drawable.btn_arrow_pre,
     val isVisibleLeftBtn : Boolean = true,

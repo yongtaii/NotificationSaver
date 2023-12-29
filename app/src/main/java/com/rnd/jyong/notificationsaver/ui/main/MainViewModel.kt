@@ -1,18 +1,12 @@
 package com.rnd.jyong.notificationsaver.ui.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.rnd.jyong.notificationsaver.R
-import com.rnd.jyong.notificationsaver.data.db.NotiDatabase
 import com.rnd.jyong.notificationsaver.database.notification.entity.Message
 import com.rnd.jyong.notificationsaver.database.notification.repository.MessageRepository
 import com.rnd.jyong.notificationsaver.ui.components.HeaderViewData
@@ -21,13 +15,10 @@ import com.rnd.jyong.notificationsaver.ui.main.data.MainItemViewData
 import com.rnd.jyong.notificationsaver.utils.ImageUtils
 import com.rnd.jyong.notificationsaver.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -54,7 +45,7 @@ class MainViewModel @Inject constructor(
 //    val goDetail = _goDetail.asStateFlow()
 
     val datas: StateFlow<PagingData<MainItemViewData>> =
-        messageRepository.getAllMessagesByPagingSource().map { pagingData ->
+        messageRepository.getGroupListByPagingSource().map { pagingData ->
             pagingData.map { it.toMainItemView { groupName -> _goDetail.value = groupName } }
         }.cachedIn(viewModelScope) // 코루틴이 데이터흐름을 캐시하고 공유 가능하게 만든다.
          .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PagingData.empty())

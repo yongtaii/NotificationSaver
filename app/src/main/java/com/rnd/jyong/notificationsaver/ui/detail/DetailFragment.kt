@@ -2,7 +2,6 @@ package com.rnd.jyong.notificationsaver.ui.detail
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,19 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rnd.jyong.notificationsaver.BR
+import androidx.recyclerview.widget.RecyclerView
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.databinding.FragmentDetailBinding
-import com.rnd.jyong.notificationsaver.databinding.ItemDetailRecyclerviewRowBinding
-import com.rnd.jyong.notificationsaver.ui.components.GeneralBindAdapter
-import com.rnd.jyong.notificationsaver.ui.main.data.MainItemViewData
+import com.rnd.jyong.notificationsaver.ui.components.paging.DetailPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -31,7 +33,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -48,15 +50,32 @@ class DetailFragment : Fragment() {
     }
 
     private fun initView() {
-
         binding.toolbar.tvTitile.text = args.groupName
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.adapter = GeneralBindAdapter<MainItemViewData, ItemDetailRecyclerviewRowBinding>(
-            R.layout.item_detail_recyclerview_row,
-            BR.data,
-            BR.position
-        )
+//        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+//        binding.recyclerView.adapter = GeneralBindAdapter<MainItemViewData, ItemDetailRecyclerviewRowBinding>(
+//            R.layout.item_detail_recyclerview_row,
+//            BR.data,
+//            BR.position
+//        )
+
+        val detailPagingAdapter = DetailPagingAdapter()
+//        mainPagingAdapter.setOnItemClickListener {
+//            Log.d("yong1234","onClick!")
+//            goDetail(it.groupName) }
+        binding.bindAdapter(detailPagingAdapter = detailPagingAdapter)
+
+        // Collect from the PagingData Flow in the ViewModel, and submit it to the
+        // PagingDataAdapter.
+        lifecycleScope.launch {
+            // We repeat on the STARTED lifecycle because an Activity may be PAUSED
+            // but still visible on the screen, for example in a multi window app
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.datas.collectLatest {
+                    detailPagingAdapter.submitData(it)
+                }
+            }
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -75,4 +94,14 @@ class DetailFragment : Fragment() {
         )
 
     }
+}
+
+/**
+ * Sets up the [RecyclerView] and binds [ArticleAdapter] to it
+ */
+private fun FragmentDetailBinding.bindAdapter(detailPagingAdapter: DetailPagingAdapter) {
+    recyclerView.adapter = detailPagingAdapter
+    recyclerView.layoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.VERTICAL, true)
+//    val decoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
+//    recyclerView.addItemDecoration(decoration)
 }

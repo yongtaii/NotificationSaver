@@ -1,19 +1,15 @@
 package com.rnd.jyong.notificationsaver.view.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.rnd.jyong.notificationsaver.R;
-import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.utils.CommonUtil;
 
 public class ImageViewActivity extends AppCompatActivity {
@@ -40,17 +36,17 @@ public class ImageViewActivity extends AppCompatActivity {
         TextView tvName = findViewById(R.id.tvName);
         TextView tvTime = findViewById(R.id.tvTime);
 
-        NotiMessage notiMessage = (NotiMessage) getIntent().getSerializableExtra(EXTRA_NOTIMSG);
-
-        if(notiMessage == null) return;
-
-        tvName.setText(notiMessage.name);
-        tvTime.setText(CommonUtil.convertTimeToSimpleTime(notiMessage.time));
-
-        Glide.with(getApplicationContext())
-                .asBitmap()
-                .load(notiMessage.image)
-                .into(ivMain);
+//        NotiMessage notiMessage = (NotiMessage) getIntent().getSerializableExtra(EXTRA_NOTIMSG);
+//
+//        if(notiMessage == null) return;
+//
+//        tvName.setText(notiMessage.name);
+//        tvTime.setText(CommonUtil.convertTimeToSimpleTime(notiMessage.time));
+//
+//        Glide.with(getApplicationContext())
+//                .asBitmap()
+//                .load(notiMessage.image)
+//                .into(ivMain);
 
 
     }

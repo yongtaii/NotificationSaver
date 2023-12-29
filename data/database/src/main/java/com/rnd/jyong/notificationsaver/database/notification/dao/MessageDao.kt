@@ -43,10 +43,23 @@ interface MessageDao {
     fun getGroupList(): Flow<List<Message>>
 
     /**
+     * 메인화면 그룹 리스트
+     * group_name 으로 그룹화 한후 최근 메시지를 가져온다
+     * */
+    @Query("SELECT * FROM ( SELECT * FROM table_message GROUP BY group_name HAVING max(post_time))  ORDER BY post_time DESC")
+    fun getGroupListByPagingSource(): PagingSource<Int, Message>
+
+    /**
      * 그룹의 메시지 전부를 가져온다
      * */
     @Query("SELECT * FROM table_message WHERE group_name=:groupName ORDER BY post_time DESC")
     fun getGroupMessages(groupName: String): Flow<List<Message>>
+
+    /**
+     * 그룹의 메시지 전부를 가져온다
+     * */
+    @Query("SELECT * FROM table_message WHERE group_name=:groupName ORDER BY post_time DESC")
+    fun getGroupMessagesByPagingSource(groupName: String): PagingSource<Int, Message>
 
 
 //    @Query("SELECT * FROM table_message ORDER BY saved_time ASC")

@@ -13,17 +13,17 @@ import com.rnd.jyong.notificationsaver.ui.main.data.MainItemViewData
 class MainPagingAdapter : PagingDataAdapter<MainItemViewData, MainPagingAdapter.MainViewHolder>(ARTICLE_DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: MainPagingAdapter.MainViewHolder, position: Int) {
-//        val pagedBook = getItem(position)
-//        pagedBook?.let { book ->
-//            holder.bind(book)
-//            holder.itemView.setOnClickListener {
-//                onItemClickListener?.let { it(book) }
-//            }
-//        }
-        val tile = getItem(position)
-        if (tile != null) {
-            holder.bind(tile)
+        val mainItemViewData = getItem(position)
+        mainItemViewData?.let {
+            holder.bind(it)
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.let { it(mainItemViewData) }
+            }
         }
+//        val tile = getItem(position)
+//        if (tile != null) {
+//            holder.bind(tile)
+//        }
     }
 
     override fun onCreateViewHolder(
@@ -35,11 +35,11 @@ class MainPagingAdapter : PagingDataAdapter<MainItemViewData, MainPagingAdapter.
         )
     }
 
-//    private var onItemClickListener: ((Message) -> Unit)? = null
+    private var onItemClickListener: ((MainItemViewData) -> Unit)? = null
 //
-//    fun setOnItemClickListener(listener: (Message) -> Unit) {
-//        onItemClickListener = listener
-//    }
+    fun setOnItemClickListener(listener: (MainItemViewData) -> Unit) {
+        onItemClickListener = listener
+    }
 
     object ARTICLE_DIFF_CALLBACK : DiffUtil.ItemCallback<MainItemViewData>() {
         override fun areItemsTheSame(oldItem: MainItemViewData, newItem: MainItemViewData): Boolean {

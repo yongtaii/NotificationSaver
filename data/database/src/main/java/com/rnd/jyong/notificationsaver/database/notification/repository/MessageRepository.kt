@@ -38,16 +38,52 @@ class MessageRepository @Inject constructor(
 
     }
 
-    companion object {
-        const val DATABSE_PAGER_PAGE_SIZE = 20
-    }
+
 
     fun getGroupList() : Flow<List<Message>> {
         return messageDao.getGroupList()
     }
 
+    fun getGroupListByPagingSource() : Flow<PagingData<Message>> {
+
+        val pagingSourceFactory = {
+            messageDao.getGroupListByPagingSource()
+        }
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = DATABSE_PAGER_PAGE_SIZE,
+                enablePlaceholders = false, // true 라면 전체 데이터사이즈를 미리 받아와서 RecyclerView 에 미리 홀더를 만들어 놓고 나머지를 Null 로 만든다.
+                maxSize = DATABSE_PAGER_PAGE_SIZE * 3 // Pager 가 메모리에 최대로 가지고 있을 수 있는 항목의 개수
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+
+    }
+
     fun getGroupMessages(groupName: String) : Flow<List<Message>> {
         return messageDao.getGroupMessages(groupName)
+    }
+
+    fun getGroupMessagesByPagingSource(groupName: String) : Flow<PagingData<Message>> {
+
+        val pagingSourceFactory = {
+            messageDao.getGroupMessagesByPagingSource(groupName)
+        }
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = DATABSE_PAGER_PAGE_SIZE,
+                enablePlaceholders = false, // true 라면 전체 데이터사이즈를 미리 받아와서 RecyclerView 에 미리 홀더를 만들어 놓고 나머지를 Null 로 만든다.
+                maxSize = DATABSE_PAGER_PAGE_SIZE * 3 // Pager 가 메모리에 최대로 가지고 있을 수 있는 항목의 개수
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+
+    }
+
+    companion object {
+        const val DATABSE_PAGER_PAGE_SIZE = 20
     }
 
 }

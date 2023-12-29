@@ -1,17 +1,5 @@
 package com.rnd.jyong.notificationsaver.data.preference;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.rnd.jyong.notificationsaver.base.App;
-import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 public class JPreference {
 
     private static final String PREF_NAME = "rms_pref";
@@ -23,9 +11,6 @@ public class JPreference {
     private static final String NOTI_MSG_DELETE_INDEX  = "NOTI_MSG_DELETE_INDEX";
     private static final String LAST_DIALOG_UPDATE  = "LAST_DIALOG_UPDATE";
 
-    public static List<NotiMessage> getIgnoreList() {
-        return getIgnoreList(IGNORE_LIST);
-    }
 
     public static boolean getIsFirst() {
         return get(GUIDE_TALK_MESSAGE, true);
@@ -62,27 +47,27 @@ public class JPreference {
         put(NOTI_MSG_DELETE_INDEX, index);
     }
 
-    public static void setIgnoreList(List<NotiMessage> list) {
-        put(IGNORE_LIST,list);
-    }
-
-    public static List<NotiMessage> getIgnoreList(String key){
-        String serializedObject = get(key, "");
-
-        if (serializedObject != null){
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<NotiMessage>>(){}.getType();
-            return gson.fromJson(serializedObject, type);
-        }
-
-        return new ArrayList<>();
-    }
-
-    public static void put(String key, List<NotiMessage> list) {
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        put(key, json);
-    }
+//    public static void setIgnoreList(List<NotiMessage> list) {
+//        put(IGNORE_LIST,list);
+//    }
+//
+//    public static List<NotiMessage> getIgnoreList(String key){
+//        String serializedObject = get(key, "");
+//
+//        if (serializedObject != null){
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<List<NotiMessage>>(){}.getType();
+//            return gson.fromJson(serializedObject, type);
+//        }
+//
+//        return new ArrayList<>();
+//    }
+//
+//    public static void put(String key, List<NotiMessage> list) {
+//        Gson gson = new Gson();
+//        String json = gson.toJson(list);
+//        put(key, json);
+//    }
 
     public static void put(String key, String value) {
 //        SharedPreferences pref = App.getInstance().getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);

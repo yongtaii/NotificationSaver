@@ -14,16 +14,12 @@ import android.view.View;
 import androidx.annotation.ArrayRes;
 import androidx.core.app.NotificationCompat;
 
-import com.rnd.jyong.notificationsaver.base.App;
-import com.rnd.jyong.notificationsaver.data.model.NotiMessage;
 import com.rnd.jyong.notificationsaver.data.preference.JPreference;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class CommonUtil {
 
@@ -106,57 +102,6 @@ public class CommonUtil {
             String formatDate = sdfNow.format(date);
             return formatDate;
         }
-
-    }
-
-    public static void addToIgnoreList(NotiMessage notiMessage){
-
-        List<NotiMessage> ignoreList = JPreference.getIgnoreList();
-        if(ignoreList == null){
-            ignoreList = new ArrayList<>();
-        }
-        ignoreList.add(notiMessage);
-        JPreference.setIgnoreList(ignoreList);
-    }
-
-    public static void removeIgnoreListItem(NotiMessage notiMessage){
-
-        boolean existInlist = false;
-        NotiMessage toDelete = null;
-
-        List<NotiMessage> ignoreList = JPreference.getIgnoreList();
-        if(ignoreList!=null && ignoreList.size() > 0){
-
-            for (NotiMessage notimsg : ignoreList) {
-                if(notimsg.roomname.equalsIgnoreCase(notiMessage.roomname)){
-                    toDelete = notimsg;
-                    existInlist = true;
-                }
-            }
-        }
-
-        if(existInlist && toDelete!=null){
-            ignoreList.remove(toDelete);
-            JPreference.setIgnoreList(ignoreList);
-        }
-
-    }
-
-    public static boolean isExistInIgnoreList(String roomname) {
-
-        try{
-            List<NotiMessage> ignoreList = JPreference.getIgnoreList();
-
-            if(ignoreList == null) return false;
-
-            for (NotiMessage notiMessage : ignoreList) {
-                if(notiMessage.roomname.equalsIgnoreCase(roomname)) return true;
-            }
-        }catch (Exception e){
-            return false;
-        }
-
-        return false;
 
     }
 
