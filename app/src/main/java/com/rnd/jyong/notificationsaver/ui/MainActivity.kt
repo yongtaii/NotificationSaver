@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.rnd.jyong.notificationsaver.R
+import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.data.preference.JPreference
 import com.rnd.jyong.notificationsaver.database.notification.entity.Message
 import com.rnd.jyong.notificationsaver.database.notification.repository.MessageRepository
@@ -25,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var messageRepository: MessageRepository
+    @Inject lateinit var messageRepository: MessageRepository
+    @Inject lateinit var admobManager: AdmobManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,24 +36,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    override fun onBackPressed() {
-////        super.onBackPressed()
-//        this.finish()
-//        Log.d("yong1234","onBackPressed()")
-//    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //todo 일정 기간 이후 메시지 삭제
-        deleteOldMessages()
-    }
-
     private fun initialise(){
 
         if (!JPreference.getIsFirst()) {
             initDefaultMessages()
             JPreference.setIsFirst(false)
         }
+
+        admobManager.init(this)
 
     }
 
@@ -72,40 +63,28 @@ class MainActivity : AppCompatActivity() {
     private fun initDefaultMessages(){
         CoroutineScope(Dispatchers.IO).launch {
 
-//            for ( i in 0..100){
-                messageRepository.insert(Message(name = application.getString(R.string.my_name),
-                    message = resources.getStringArray(R.array.example_msg_howtouse_text)[0],
-                    groupName = application.getString(R.string.example_msg_howtouse_name),
-                    iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
-                    postTime = (System.currentTimeMillis() - (1000 * 60 * 5)),
-                    imageBase64 = ""))
+            messageRepository.insert(Message(name = application.getString(R.string.my_name),
+                message = resources.getStringArray(R.array.example_msg_howtouse_text)[0],
+                groupName = application.getString(R.string.example_msg_howtouse_name),
+                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
+                postTime = (System.currentTimeMillis() - (1000 * 60 * 5)),
+                imageBase64 = ""))
 
-                messageRepository.insert(Message(name = application.getString(R.string.my_name),
-                    message = resources.getStringArray(R.array.example_msg_howtouse_text)[1],
-                    groupName = application.getString(R.string.example_msg_howtouse_name),
-                    iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
-                    postTime = (System.currentTimeMillis()),
-                    imageBase64 = ""))
-//            }
-
-//            messageRepository.insert(Message(name = application.getString(R.string.my_name),
-//                message = resources.getStringArray(R.array.example_msg_howtouse_text)[0],
-//                groupName = application.getString(R.string.example_msg_howtouse_name),
-//                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
-//                postTime = (System.currentTimeMillis() - (1000*60*60*24*3)),
-//                imageBase64 = ""))
-//
-//            messageRepository.insert(Message(name = application.getString(R.string.my_name),
-//                message = resources.getStringArray(R.array.example_msg_howtouse_text)[1],
-//                groupName = application.getString(R.string.example_msg_howtouse_name),
-//                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
-//                postTime = (System.currentTimeMillis() - (1000*60*60*24*3)),
-//                imageBase64 = ""))
+            messageRepository.insert(Message(name = application.getString(R.string.my_name),
+                message = resources.getStringArray(R.array.example_msg_howtouse_text)[1],
+                groupName = application.getString(R.string.example_msg_howtouse_name),
+                iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
+                postTime = (System.currentTimeMillis()),
+                imageBase64 = ""))
 
         }
 
-
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        deleteOldMessages()
+    }
+
 
 }

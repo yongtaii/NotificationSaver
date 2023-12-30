@@ -132,4 +132,11 @@ object Libs {
      * 툴팁
      * */
     const val skydovesToolTip= "com.github.skydoves:balloon:1.4.8"
+
+    object Admob {
+        private const val version = "22.6.0"
+        const val ads = "com.google.android.gms:play-services-ads:$version"
+    }
+
+
 }

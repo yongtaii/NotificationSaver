@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rnd.jyong.notificationsaver.R
+import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
 import com.rnd.jyong.notificationsaver.ui.components.paging.MainPagingAdapter
 import com.rnd.jyong.notificationsaver.utils.PopupUtils
@@ -25,12 +26,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding : FragmentMainBinding
+    @Inject lateinit var admobManager: AdmobManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +49,10 @@ class MainFragment : Fragment() {
 //        binding.re
 
         val mainPagingAdapter = MainPagingAdapter()
-        mainPagingAdapter.setOnItemClickListener { goDetail(it.groupName) }
+        mainPagingAdapter.setOnItemClickListener {
+            admobManager.showAd(requireActivity())
+            goDetail(it.groupName)
+        }
         mainPagingAdapter.setOnItemLongClickListener {
             PopupUtils.createSimplePopup(activity = requireActivity(),
                 message = getString(R.string.popup_delete_message_title),
@@ -90,7 +96,6 @@ class MainFragment : Fragment() {
      * 상세페이지 이동
      * */
     private fun goDetail(groupName : String) {
-        Log.d("yong1234","goDetail : $groupName")
         val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(groupName)
         findNavController().navigate(direction)
     }

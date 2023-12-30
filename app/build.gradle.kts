@@ -83,7 +83,7 @@ dependencies {
     // gson
     implementation (Libs.Square.gson)
     // admob
-    implementation ("com.google.android.gms:play-services-ads:19.4.0")
+    implementation (Libs.Admob.ads)
 
     // Glide Libs
     implementation (Libs.Glide.glide)
