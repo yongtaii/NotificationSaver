@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "com.rnd.jyong.notificationsaver.database"
-    compileSdkVersion(33)
+    compileSdk = 33
 
     defaultConfig {
-        minSdkVersion(19)
+        minSdk = 19
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

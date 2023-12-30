@@ -21,6 +21,10 @@ class MessageRepository @Inject constructor(
         messageDao.deleteGroup(groupName)
     }
 
+    suspend fun deleteMessageByTime(inputTime: Long){
+        messageDao.deleteMessageByTime(inputTime)
+    }
+
     suspend fun getLastestGroupMessages() : List<Message>{
         return messageDao.getLastestGroupMessages()
     }

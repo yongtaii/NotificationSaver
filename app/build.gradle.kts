@@ -101,6 +101,7 @@ dependencies {
     kapt (Libs.Glide.compiler)
 
     implementation(project(":data:database"))
+    implementation(project(":data:datastore"))
 
     // Navigation Component
     implementation (Libs.AndroidX.Navigation.fragment)
@@ -116,6 +117,9 @@ dependencies {
 
     //coroutine
     implementation (Libs.Kotlin.coroutine)
+
+    //datastore
+    implementation (Libs.DataStore.preferences)
 
 //    //firebase
 //    implementation platform("com.google.firebase:firebase-bom:25.12.0")

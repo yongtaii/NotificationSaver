@@ -27,6 +27,12 @@ interface MessageDao {
     suspend fun deleteGroup(groupName: String)
 
     /**
+     * 입력시간 기반 메시지를 삭제한다
+     * */
+    @Query("DELETE FROM table_message WHERE post_time < :inputTime")
+    suspend fun deleteMessageByTime(inputTime: Long)
+
+    /**
      * 전체 메시지
      * @return Flow
      * */
@@ -77,11 +83,6 @@ interface MessageDao {
 //
 //    @Query("DELETE FROM table_message")
 //    fun deleteAll()
-//
-//    @Query("DELETE FROM table_message WHERE saved_time < :inputTime")
-//    fun deleteMessageWithTime(inputTime: Long)
-//
-
 //
 
 }
