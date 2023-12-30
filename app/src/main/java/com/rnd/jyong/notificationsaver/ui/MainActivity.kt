@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initialise(){
 
-        if (!JPreference.getIsFirst()) {
+        if (JPreference.getIsFirst()) {
             initDefaultMessages()
             JPreference.setIsFirst(false)
         }

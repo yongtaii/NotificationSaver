@@ -10,6 +10,16 @@ android {
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 
+    signingConfigs {
+        create("yongkey") {
+            keyAlias = "yongkey"
+            keyPassword = "12qwaszx12"
+            storeFile = file("../yongkey(12qwaszx12).jks")
+            storePassword = "12qwaszx12"
+            enableV2Signing = true
+        }
+    }
+
     defaultConfig {
         applicationId = "com.rnd.jyong.notificationsaver"
         minSdk = Versions.minSdk
@@ -23,6 +33,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("yongkey")
             proguardFile("proguard-rules.pro")
         }
         debug {

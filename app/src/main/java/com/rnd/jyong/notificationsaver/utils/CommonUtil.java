@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.ArrayRes;
@@ -116,7 +117,12 @@ public class CommonUtil {
 
         long lastRoomInAdmobTime = JPreference.getLastRoomInAdmobTime();
         long currentTime = System.currentTimeMillis();
-        return currentTime -lastRoomInAdmobTime > (3 * 1000 * 60);
+
+//        long passedSeconds = (currentTime -lastRoomInAdmobTime) / 1000;
+        long passedMinutes = (currentTime -lastRoomInAdmobTime) / (1000 * 60);
+//        Log.d("yong1234","passedSeconds : " +passedSeconds);
+//        Log.d("yong1234","passedMinutes : " +passedMinutes);
+        return passedMinutes >= 3;
 
     }
 
