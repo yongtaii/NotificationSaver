@@ -15,7 +15,6 @@ data class HeaderViewData(
     val onRightClickListener : OnRightClickListener? = null,
 ) {
     fun onClickLeftBtn(){
-        Log.d("yong1234","111")
         onLeftClickListener?.onClick()
     }
 

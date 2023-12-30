@@ -28,12 +28,12 @@ class NotificationListenerService : NotificationListenerService() {
         if(message.message.contains("(광고)")) return
 
 
-        Log.d("yong1234","1name : ${message.name}")
-        Log.d("yong1234","1message : ${message.message}")
-        Log.d("yong1234","1groupName : ${message.groupName}")
+//        Log.d("yong1234","1name : ${message.name}")
+//        Log.d("yong1234","1message : ${message.message}")
+//        Log.d("yong1234","1groupName : ${message.groupName}")
 //        Log.d("yong1234","1iconBase64 : ${message.iconBase64 == ""}")
 //        Log.d("yong1234","11imageBase64 : ${message.imageBase64 == ""}")
-        Log.d("yong1234","postTime : ${message.postTime}")
+//        Log.d("yong1234","postTime : ${message.postTime}")
 
         CoroutineScope(Dispatchers.IO).launch {
             messageRepository.insert(message)
