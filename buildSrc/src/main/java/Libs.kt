@@ -143,5 +143,10 @@ object Libs {
         const val preferences = "androidx.datastore:datastore-preferences:$version"
     }
 
+    object OpenSource {
+        const val plugin = "com.google.android.gms:oss-licenses-plugin:0.10.4"
+        const val license = "com.google.android.gms:play-services-oss-licenses:17.0.0"
+    }
+
 
 }

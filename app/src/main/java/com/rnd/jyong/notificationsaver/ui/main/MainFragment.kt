@@ -1,12 +1,15 @@
 package com.rnd.jyong.notificationsaver.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
@@ -86,10 +90,11 @@ class MainFragment : Fragment() {
         viewModel.goDetail.observe(viewLifecycleOwner) {
             goDetail(it)
         }
-        viewModel.onPrev.observe(viewLifecycleOwner) {
-            if(it == true) requireActivity().finish()
+        viewModel.showSetting.observe(viewLifecycleOwner) {
+            if(it == true) {
+                showPopupMenu()
+            }
         }
-//        viewModel.goDetail.collectLatest { goDetail(it) }
     }
 
     /**
@@ -98,6 +103,24 @@ class MainFragment : Fragment() {
     private fun goDetail(groupName : String) {
         val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(groupName)
         findNavController().navigate(direction)
+    }
+
+    private fun showPopupMenu(){
+        PopupMenu(requireActivity(), binding.toolbar.ivRightBtn).apply {
+
+            menuInflater.inflate(R.menu.menu_setting, this.menu)
+
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_opensource -> {
+                        startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java))
+                    }
+                }
+                false
+            }
+
+        }.show()
+
     }
 
     override fun onAttach(context: Context) {

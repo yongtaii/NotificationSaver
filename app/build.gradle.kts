@@ -2,6 +2,7 @@ plugins {
     id ("com.android.application")
     id ("androidx.navigation.safeargs") // navigation
     id("com.google.dagger.hilt.android") //hilt
+    id("com.google.android.gms.oss-licenses-plugin") //opensource
     kotlin("android")
     kotlin("kapt")
 }
@@ -120,6 +121,9 @@ dependencies {
 
     //datastore
     implementation (Libs.DataStore.preferences)
+
+    // opensource
+    implementation (Libs.OpenSource.license)
 
 //    //firebase
 //    implementation platform("com.google.firebase:firebase-bom:25.12.0")

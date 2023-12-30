@@ -38,10 +38,10 @@ class MainViewModel @Inject constructor(
     private val _goDetail = SingleLiveEvent<String>()
     var goDetail = _goDetail
 
-    private val _onPrev = SingleLiveEvent<Boolean>()
-    var onPrev = _onPrev
+    private val _showSetting = SingleLiveEvent<Boolean>()
+    var showSetting = _showSetting
 
-    val headerViewData = HeaderViewData(titleText = application.getString(R.string.main_title), onRightClickListener = { _onPrev.value = true}, isVisibleLeftBtn = false)
+    val headerViewData = HeaderViewData(titleText = application.getString(R.string.main_title), onRightClickListener = { _showSetting.value = true}, isVisibleLeftBtn = false)
 
 //    private var _goDetail = MutableStateFlow<String>("")
 //    val goDetail = _goDetail.asStateFlow()

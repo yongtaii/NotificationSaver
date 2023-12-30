@@ -17,6 +17,8 @@ buildscript {
         classpath(Libs.AndroidX.Navigation.safeArgs)
         // hilt
         classpath(Libs.Hilt.hiltPlugin)
+        // open source
+        classpath(Libs.OpenSource.plugin)
 //        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
 
     }
