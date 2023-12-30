@@ -1,17 +1,20 @@
 package com.rnd.jyong.notificationsaver.ui
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
+import com.rnd.jyong.notificationsaver.core.firebase.RemoteConfigManager
 import com.rnd.jyong.notificationsaver.database.notification.entity.Message
 import com.rnd.jyong.notificationsaver.database.notification.repository.MessageRepository
 import com.rnd.jyong.notificationsaver.databinding.ActivityMainBinding
 import com.rnd.jyong.notificationsaver.datastore.DataStoreKey
 import com.rnd.jyong.notificationsaver.datastore.DataStoreManager
 import com.rnd.jyong.notificationsaver.utils.FileUtils
+import com.rnd.jyong.notificationsaver.utils.PopupUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,18 +29,20 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var messageRepository: MessageRepository
     @Inject lateinit var admobManager: AdmobManager
+    @Inject lateinit var remoteConfigManager: RemoteConfigManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initialise()
+        observeLiveData()
     }
 
     private fun initialise(){
 
         Timber.plant(Timber.DebugTree()) // init timber
         insertDefaultMessages()
-
+        remoteConfigManager.init()
         admobManager.init(this)
     }
 
@@ -46,6 +51,12 @@ class MainActivity : AppCompatActivity() {
             // 일주일 전 메시지는 삭제한다
             val time = System.currentTimeMillis() - (1000L*60L*60L*24L*7L)
             messageRepository.deleteMessageByTime(time)
+        }
+    }
+
+    private fun observeLiveData(){
+        remoteConfigManager.invalidVersionEvent.observe(this) {
+            if(it == true){ PopupUtils.createAppUpdatePopup(this).show() }
         }
     }
 

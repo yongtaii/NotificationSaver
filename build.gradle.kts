@@ -9,7 +9,8 @@ buildscript {
         classpath(Libs.androidGradlePlugin)
 
         // firebase
-//        classpath("com.google.gms:google-services:4.3.4")
+        classpath(Libs.Firebase.googleService)
+
         classpath(Libs.Kotlin.gradlePlugin)
 
 

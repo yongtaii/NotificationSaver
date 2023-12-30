@@ -91,13 +91,14 @@ object Libs {
     }
 
     object Firebase {
-        const val bomPlatform = "com.google.firebase:firebase-bom:29.0.1"
+        const val bomPlatform = "com.google.firebase:firebase-bom:32.7.0"
         const val remoteConfig = "com.google.firebase:firebase-config"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:2.8.1"
         const val analytics = "com.google.firebase:firebase-analytics"
         const val messaging = "com.google.firebase:firebase-messaging:22.0.0"
         const val dynamicLinks = "com.google.firebase:firebase-dynamic-links"
+        const val googleService = "com.google.gms:google-services:4.3.4"
     }
 
     object Glide {

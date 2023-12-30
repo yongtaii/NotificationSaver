@@ -3,6 +3,7 @@ plugins {
     id ("androidx.navigation.safeargs") // navigation
     id("com.google.dagger.hilt.android") //hilt
     id("com.google.android.gms.oss-licenses-plugin") //opensource
+    id("com.google.gms.google-services") //firebase
     kotlin("android")
     kotlin("kapt")
 }
@@ -127,6 +128,11 @@ dependencies {
 
     // logger
     implementation (Libs.JakeWharton.timber)
+
+    //firebase
+    implementation(platform(Libs.Firebase.bomPlatform))
+    implementation(Libs.Firebase.remoteConfig)
+
 
 //    //firebase
 //    implementation platform("com.google.firebase:firebase-bom:25.12.0")

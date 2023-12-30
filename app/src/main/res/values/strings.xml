@@ -58,4 +58,11 @@
     <!-- Main -->
     <string name="main_title">List</string>
     <string name="popup_delete_message_title">Delete it ?</string>
+
+    <!-- Popup-->
+    <string name="popup_button_cancel">cancel</string>
+    <string name="popup_button_ok">ok</string>
+    <string name="popup_disable_message">A new version has been released. Please use it after updating the app.</string>
+
+
 </resources>
