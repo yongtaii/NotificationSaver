@@ -148,5 +148,8 @@ object Libs {
         const val license = "com.google.android.gms:play-services-oss-licenses:17.0.0"
     }
 
+    object JakeWharton {
+        const val timber = "com.jakewharton.timber:timber:5.0.1"
+    }
 
 }

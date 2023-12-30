@@ -125,6 +125,9 @@ dependencies {
     // opensource
     implementation (Libs.OpenSource.license)
 
+    // logger
+    implementation (Libs.JakeWharton.timber)
+
 //    //firebase
 //    implementation platform("com.google.firebase:firebase-bom:25.12.0")
 //    implementation ("com.google.firebase:firebase-analytics")

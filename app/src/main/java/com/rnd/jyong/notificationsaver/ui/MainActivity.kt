@@ -1,27 +1,22 @@
 package com.rnd.jyong.notificationsaver.ui
 
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
-import com.rnd.jyong.notificationsaver.data.preference.JPreference
 import com.rnd.jyong.notificationsaver.database.notification.entity.Message
 import com.rnd.jyong.notificationsaver.database.notification.repository.MessageRepository
 import com.rnd.jyong.notificationsaver.databinding.ActivityMainBinding
 import com.rnd.jyong.notificationsaver.datastore.DataStoreKey
 import com.rnd.jyong.notificationsaver.datastore.DataStoreManager
 import com.rnd.jyong.notificationsaver.utils.FileUtils
-import com.rnd.jyong.notificationsaver.utils.ImageUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,10 +35,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initialise(){
 
+        Timber.plant(Timber.DebugTree()) // init timber
         insertDefaultMessages()
 
         admobManager.init(this)
-
     }
 
     private fun deleteOldMessages(){
@@ -56,9 +51,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun insertDefaultMessages(){
 
+
         CoroutineScope(Dispatchers.IO).launch {
 
             val isFirst = DataStoreManager.get(context = applicationContext, DataStoreKey.IS_FIRST, true)
+
             if(isFirst){
                 DataStoreManager.save(context = applicationContext, DataStoreKey.IS_FIRST, false)
                 messageRepository.insert(Message(name = application.getString(R.string.my_name),
