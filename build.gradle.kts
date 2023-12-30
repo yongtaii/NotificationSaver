@@ -10,6 +10,7 @@ buildscript {
 
         // firebase
         classpath(Libs.Firebase.googleService)
+        classpath(Libs.Firebase.crashlyticsGradle)
 
         classpath(Libs.Kotlin.gradlePlugin)
 

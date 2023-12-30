@@ -4,6 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android") //hilt
     id("com.google.android.gms.oss-licenses-plugin") //opensource
     id("com.google.gms.google-services") //firebase
+    id("com.google.firebase.crashlytics") //crashlytics
     kotlin("android")
     kotlin("kapt")
 }
@@ -132,6 +133,8 @@ dependencies {
     //firebase
     implementation(platform(Libs.Firebase.bomPlatform))
     implementation(Libs.Firebase.remoteConfig)
+    implementation(Libs.Firebase.crashlytics)
+    implementation(Libs.Firebase.analytics)
 
 
 //    //firebase
