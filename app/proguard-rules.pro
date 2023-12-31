@@ -22,7 +22,12 @@
 
 
 # Firebase - realtime database
--keepattributes Signature
 -keepclassmembers class com.rnd.jyong.notificationsaver.** {
   *;
 }
+
+#Firebase
+-keepattributes *Annotation*
+-keepattributes Signature
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.firebase.** { *; }

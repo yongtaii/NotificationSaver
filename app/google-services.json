@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "779817572811",
+    "firebase_url": "https://notification-saver-b88cb.firebaseio.com",
+    "project_id": "notification-saver-b88cb",
+    "storage_bucket": "notification-saver-b88cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779817572811:android:236d7b1afc60f4d866be4e",
+        "android_client_info": {
+          "package_name": "com.rnd.jyong.notificationsaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779817572811-5j6978rcff9l22grumotv9q04vm1bvff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rnd.jyong.notificationsaver",
+            "certificate_hash": "081fe192839e1993f5c32c0063cd2bc6e2d6a81f"
+          }
+        },
+        {
+          "client_id": "779817572811-bip4vfd40rkful0m9r4mj6t68ubktg4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH8X14AslDQ_t0qvHOZ--4zyOkZvJHu5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779817572811-bip4vfd40rkful0m9r4mj6t68ubktg4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1549026857562864~4814546127"
+    }
+  ],
+  "configuration_version": "1"
+}
