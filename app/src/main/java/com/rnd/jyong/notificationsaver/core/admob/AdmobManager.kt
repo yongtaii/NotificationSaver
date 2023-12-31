@@ -47,7 +47,6 @@ class AdmobManager @Inject constructor() {
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 Log.d("AdmobManager", "Ad was loaded")
-                JPreference.setShowLastRoomInAdmobTime(System.currentTimeMillis())
                 mInterstitialAd = interstitialAd
             }
         })
