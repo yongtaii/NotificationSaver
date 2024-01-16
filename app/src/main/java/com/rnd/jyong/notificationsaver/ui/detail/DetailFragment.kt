@@ -17,11 +17,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rnd.jyong.notificationsaver.R
+import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.databinding.FragmentDetailBinding
 import com.rnd.jyong.notificationsaver.ui.components.paging.DetailPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -29,6 +31,7 @@ class DetailFragment : Fragment() {
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var binding : FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
+    @Inject lateinit var admobManager: AdmobManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +48,10 @@ class DetailFragment : Fragment() {
         initView()
         viewModel.initData(args.groupName)
         viewModel.onPrev.observe(viewLifecycleOwner) {
-            if(it == true) findNavController().popBackStack()
+            if(it == true){
+                admobManager.showAd(requireActivity())
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -85,6 +91,7 @@ class DetailFragment : Fragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
+                admobManager.showAd(requireActivity())
                 findNavController().popBackStack()
             }
         }

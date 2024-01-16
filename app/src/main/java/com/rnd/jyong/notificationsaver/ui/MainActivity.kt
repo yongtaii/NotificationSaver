@@ -15,6 +15,7 @@ import com.rnd.jyong.notificationsaver.datastore.DataStoreKey
 import com.rnd.jyong.notificationsaver.datastore.DataStoreManager
 import com.rnd.jyong.notificationsaver.utils.FileUtils
 import com.rnd.jyong.notificationsaver.utils.PopupUtils
+import com.rnd.jyong.notificationsaver.utils.SystemUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         observeLiveData()
     }
 
+
+
     private fun initialise(){
 
         Timber.plant(Timber.DebugTree()) // init timber
@@ -48,8 +51,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteOldMessages(){
         CoroutineScope(Dispatchers.IO).launch {
-            // 일주일 전 메시지는 삭제한다
-            val time = System.currentTimeMillis() - (1000L*60L*60L*24L*7L)
+            // 30일 전 메시지는 삭제한다
+            val time = System.currentTimeMillis() - (1000L*60L*60L*24L*30L)
             messageRepository.deleteMessageByTime(time)
         }
     }

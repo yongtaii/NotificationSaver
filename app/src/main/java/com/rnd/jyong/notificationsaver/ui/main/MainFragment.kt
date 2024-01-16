@@ -25,6 +25,7 @@ import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
 import com.rnd.jyong.notificationsaver.ui.components.paging.MainPagingAdapter
 import com.rnd.jyong.notificationsaver.utils.PopupUtils
+import com.rnd.jyong.notificationsaver.utils.SystemUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +38,7 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding : FragmentMainBinding
-    @Inject lateinit var admobManager: AdmobManager
+//    @Inject lateinit var admobManager: AdmobManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,12 +50,20 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if(!SystemUtils.isMyPackageNotificationListenerEnabled(context)) {
+            requireActivity().finish()
+        }
+    }
+
     private fun initView() {
 //        binding.re
 
         val mainPagingAdapter = MainPagingAdapter()
         mainPagingAdapter.setOnItemClickListener {
-            admobManager.showAd(requireActivity())
+//            admobManager.showAd(requireActivity())
             goDetail(it.groupName)
         }
         mainPagingAdapter.setOnItemLongClickListener {

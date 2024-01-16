@@ -15,43 +15,71 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class AdmobManager @Inject constructor() {
 
     private var mInterstitialAd: InterstitialAd? = null
 
-    fun init(context : Activity) {
+    fun init(activityContext : Activity) {
+        Timber.d("init()")
+
         if (BuildConfig.DEBUG) return
-        MobileAds.initialize(context) {}
+
+        MobileAds.initialize(activityContext) {
+            loadAd(activityContext)
+        }
     }
 
-    fun showAd(context : Activity) {
+    fun loadAd(activityContext : Activity) {
 
-        if(BuildConfig.DEBUG || !isAdmobTimePassed(context)) return
-//        if(!isAdmobTimePassed(context)) return
-
-        CoroutineScope(Dispatchers.IO).launch {DataStoreManager.save(context, DataStoreKey.LAST_ADMOB_TIME, System.currentTimeMillis()) }
+        Timber.d("loadAd()")
 
         val adRequest = AdRequest.Builder().build()
 
 //        val testAdUnitId = "ca-app-pub-3940256099942544/1033173712" // test 진입광고 ID
         val adUnitId = "ca-app-pub-4557410077390092/9402152657" // jeonyt0510 진입광고 ID
 
-        InterstitialAd.load(context,adUnitId, adRequest, object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(activityContext,adUnitId, adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("AdmobManager", "Ad was failed")
+                Timber.d("Ad was failed")
                 mInterstitialAd = null
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.d("AdmobManager", "Ad was loaded")
+                Timber.d("Ad was loaded")
                 mInterstitialAd = interstitialAd
             }
         })
 
-        mInterstitialAd?.show(context)
+
+    }
+
+    fun showAd(activityContext : Activity) {
+
+        Timber.d("showAd()")
+
+        if(mInterstitialAd == null){
+            Timber.d("mInterstitialAd is null")
+            loadAd(activityContext)
+            return
+        }
+
+        Timber.d("isAdmobTimePassed : ${isAdmobTimePassed(activityContext)}")
+
+        if(BuildConfig.DEBUG || !isAdmobTimePassed(activityContext)) return
+
+//        if(!isAdmobTimePassed(activityContext)) return
+
+        CoroutineScope(Dispatchers.IO).launch {DataStoreManager.save(activityContext, DataStoreKey.LAST_ADMOB_TIME, System.currentTimeMillis()) }
+
+
+        mInterstitialAd?.show(activityContext)
+
+        loadAd(activityContext)
 
     }
 
@@ -59,14 +87,14 @@ class AdmobManager @Inject constructor() {
      * 애드몹 미표출 시간이 지났는지 여부
      * @return true : admob 표출  , false : admob 미표출
      * */
-    private fun isAdmobTimePassed(context: Activity) : Boolean{
-        val lastAdmobTime = runBlocking {DataStoreManager.get(context, DataStoreKey.LAST_ADMOB_TIME, 0L) }
+    private fun isAdmobTimePassed(activityContext: Activity) : Boolean{
+        val lastAdmobTime = runBlocking {DataStoreManager.get(activityContext, DataStoreKey.LAST_ADMOB_TIME, 0L) }
 
         val currentTime = System.currentTimeMillis()
 
 //        val passedSeconds = (currentTime -lastAdmobTime) / 1000;
         val passedMinutes: Long = (currentTime - lastAdmobTime) / (1000 * 60)
-        return passedMinutes >= 3
+        return passedMinutes >= 2
     }
 
 }
