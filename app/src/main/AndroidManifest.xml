@@ -10,14 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- Addmob (jeonyt0510) -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
-<!--            android:value="ca-app-pub-4557410077390092~8847618880" />-->
-        <!-- Addmob (test) -->
+        <!-- jeonyt0510 광고 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-4557410077390092~8847618880" />
+        <!-- 태스트 광고 -->
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--            android:value="ca-app-pub-3940256099942544~3347511713" />-->
         <activity
             android:name=".view.ui.ImageViewActivity"
             android:theme="@style/WhiteActinBarTheme" />

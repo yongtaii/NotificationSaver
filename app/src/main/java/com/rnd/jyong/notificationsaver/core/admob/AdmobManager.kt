@@ -27,17 +27,17 @@ class AdmobManager @Inject constructor() {
     private var mInterstitialAd: InterstitialAd? = null
 
     companion object {
-        const val IS_TEST = true
+        const val IS_TEST = false
         private val FRONT_BANNER_UNIT_ID = if(IS_TEST){
             "ca-app-pub-3940256099942544/1033173712" // test 진입광고 ID
         }else{
             "ca-app-pub-4557410077390092/9402152657" // jeonyt0510 진입광고 ID
         }
-        private val BOTTOM_BANNER_UNIT_ID = if(IS_TEST){
-            "ca-app-pub-3940256099942544/6300978111" // test 하단 배너광고 ID
-        }else{
-            "ca-app-pub-3940256099942544/6300978111" // jeonyt0510 하단 배너광고 ID
-        }
+//        private val BOTTOM_BANNER_UNIT_ID = if(IS_TEST){
+//            "ca-app-pub-3940256099942544/6300978111" // test 하단 배너광고 ID
+//        }else{
+//            "ca-app-pub-3940256099942544/6300978111" // jeonyt0510 하단 배너광고 ID
+//        }
     }
 
     /**
