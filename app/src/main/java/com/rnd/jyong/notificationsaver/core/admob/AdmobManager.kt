@@ -92,9 +92,9 @@ class AdmobManager @Inject constructor() {
 
         val currentTime = System.currentTimeMillis()
 
-//        val passedSeconds = (currentTime -lastAdmobTime) / 1000;
-        val passedMinutes: Long = (currentTime - lastAdmobTime) / (1000 * 60)
-        return passedMinutes >= 2
+        val passedSeconds = (currentTime -lastAdmobTime) / 1000;
+//        val passedMinutes: Long = (currentTime - lastAdmobTime) / (1000 * 60)
+        return passedSeconds >= 30
     }
 
 }
