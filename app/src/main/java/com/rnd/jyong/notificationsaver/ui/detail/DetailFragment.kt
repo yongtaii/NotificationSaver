@@ -49,7 +49,7 @@ class DetailFragment : Fragment() {
         viewModel.initData(args.groupName)
         viewModel.onPrev.observe(viewLifecycleOwner) {
             if(it == true){
-                admobManager.showAd(requireActivity())
+                admobManager.showFrontAd(requireActivity())
                 findNavController().popBackStack()
             }
         }
@@ -91,7 +91,7 @@ class DetailFragment : Fragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
-                admobManager.showAd(requireActivity())
+                admobManager.showFrontAd(requireActivity())
                 findNavController().popBackStack()
             }
         }

@@ -3,11 +3,9 @@ package com.rnd.jyong.notificationsaver.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
@@ -19,7 +17,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.rnd.jyong.notificationsaver.BuildConfig
 import com.rnd.jyong.notificationsaver.R
 import com.rnd.jyong.notificationsaver.core.admob.AdmobManager
 import com.rnd.jyong.notificationsaver.databinding.FragmentMainBinding
@@ -27,8 +29,6 @@ import com.rnd.jyong.notificationsaver.ui.components.paging.MainPagingAdapter
 import com.rnd.jyong.notificationsaver.utils.PopupUtils
 import com.rnd.jyong.notificationsaver.utils.SystemUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +38,8 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding : FragmentMainBinding
-//    @Inject lateinit var admobManager: AdmobManager
+    @Inject lateinit var admobManager: AdmobManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +48,7 @@ class MainFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
@@ -59,7 +61,9 @@ class MainFragment : Fragment() {
     }
 
     private fun initView() {
-//        binding.re
+
+        // load banner view
+//        admobManager.loadBannerAdView(binding.adView)
 
         val mainPagingAdapter = MainPagingAdapter()
         mainPagingAdapter.setOnItemClickListener {

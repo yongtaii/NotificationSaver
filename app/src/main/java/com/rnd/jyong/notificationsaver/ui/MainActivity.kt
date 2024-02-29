@@ -70,6 +70,16 @@ class MainActivity : AppCompatActivity() {
 
             val isFirst = DataStoreManager.get(context = applicationContext, DataStoreKey.IS_FIRST, true)
 
+            // for test
+//            for(i in 1..20){
+//                messageRepository.insert(Message(name = application.getString(R.string.my_name),
+//                    message = resources.getStringArray(R.array.example_msg_howtouse_text)[1],
+//                    groupName = i.toString(),
+//                    iconBase64 = FileUtils.convertBitmapToBase64(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)),
+//                    postTime = (System.currentTimeMillis()),
+//                    imageBase64 = ""))
+//            }
+
             if(isFirst){
                 DataStoreManager.save(context = applicationContext, DataStoreKey.IS_FIRST, false)
                 messageRepository.insert(Message(name = application.getString(R.string.my_name),
