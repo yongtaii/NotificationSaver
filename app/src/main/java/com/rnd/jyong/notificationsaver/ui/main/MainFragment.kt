@@ -63,7 +63,7 @@ class MainFragment : Fragment() {
     private fun initView() {
 
         // load banner view
-//        admobManager.loadBannerAdView(binding.adView)
+        admobManager.loadBannerAdView(binding.adView)
 
         val mainPagingAdapter = MainPagingAdapter()
         mainPagingAdapter.setOnItemClickListener {

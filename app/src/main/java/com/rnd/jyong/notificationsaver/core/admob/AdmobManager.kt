@@ -3,6 +3,7 @@ package com.rnd.jyong.notificationsaver.core.admob
 import android.app.Activity
 import android.util.Log
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
@@ -26,7 +27,7 @@ class AdmobManager @Inject constructor() {
     private var mInterstitialAd: InterstitialAd? = null
 
     companion object {
-        private val IS_TEST = true
+        const val IS_TEST = true
         private val FRONT_BANNER_UNIT_ID = if(IS_TEST){
             "ca-app-pub-3940256099942544/1033173712" // test 진입광고 ID
         }else{
@@ -120,8 +121,12 @@ class AdmobManager @Inject constructor() {
     /**
      * Banner 광고를 로드한다
      * */
-    fun loadBannerAdView(adView : AdView) = adView
-        .apply { adUnitId = BOTTOM_BANNER_UNIT_ID }
-        .run { loadAd(AdRequest.Builder().build()) }
+    fun loadBannerAdView(adView : AdView) = adView.loadAd(AdRequest.Builder().build())
+//        .apply {
+//            setAdSize(AdSize.BANNER)
+//            adUnitId = "ca-app-pub-3940256099942544/6300978111" }
+//        .run {
+//            loadAd(AdRequest.Builder().build())
+//        }
 
 }
